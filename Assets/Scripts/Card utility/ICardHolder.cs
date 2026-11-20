@@ -7,4 +7,8 @@ public interface ICardHolder
 
     //returns null if there arent any cards
     public Card takeTopCard();
+
+    public Card peekTop();
+
+    public void PutCard(Card card);
 }
