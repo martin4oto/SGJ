@@ -85,7 +85,13 @@ public class Table : MonoBehaviour
         }
         else if (returnCard != null && _card == null)
         {
+            numberOfCardsPresnt--;
             PutAtTheEnd();
+        }
+
+        if(_card != null && returnCard == null) 
+        {
+            PutNewCard(_card);
         }
 
         return returnCard;
@@ -99,6 +105,7 @@ public class Table : MonoBehaviour
             return;
         }
 
-
+        allSlots[numberOfCardsPresnt].PutCard(card);
+        numberOfCardsPresnt++;
     }
 }
