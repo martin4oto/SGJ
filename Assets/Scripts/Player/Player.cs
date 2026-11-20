@@ -36,4 +36,10 @@ public class Player : MonoBehaviour
     public void CardInteract() 
     {
     }
+
+    public void Hit() 
+    {
+        Card card = Deck.instance.takeTopCard();
+        table.PutNewCard(card);
+    }
 }
