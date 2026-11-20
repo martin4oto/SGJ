@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using ArcadesTemplate.Input;
 using UnityEngine.Localization;
+using UnityEngine.InputSystem;
 
 namespace ArcadesTemplate.Core
 {
@@ -16,7 +16,7 @@ namespace ArcadesTemplate.Core
     /// Persistent game-flow controller: Start -> Main -> Win/Lose (-> NameEntry) -> replay.
     /// Game Jam template: playing and replaying is always free (no credits).
     /// </summary>
-    [DefaultExecutionOrder(-150)]
+    [DefaultExecutionOrder(-45)]
     public class ArcadeSceneManager : MonoBehaviour
     {
         public static ArcadeSceneManager Instance { get; private set; }
@@ -46,6 +46,7 @@ namespace ArcadesTemplate.Core
 
         private float _lastExitPressTime = -999f;
         private bool _exitArmed = false;
+        bool isLoading;
 
         private void Awake()
         {
@@ -63,11 +64,6 @@ namespace ArcadesTemplate.Core
         {
             if (Instance == this)
                 Instance = null;
-        }
-
-        private void Update()
-        {
-            HandleExitInput();
         }
 
         public void LoadStartScreen()
@@ -143,17 +139,18 @@ namespace ArcadesTemplate.Core
                 return;
             }
 
-            SceneManager.LoadScene(sceneName);
+            if (!isLoading){
+                isLoading = true;
+                SceneManager.LoadScene(sceneName);
+            }
         }
 
-        private void HandleExitInput()
+        void SceneLoaded(Scene scene, LoadSceneMode mode){
+            isLoading = false;   
+        }
+
+        private void HandleExitInput(InputAction.CallbackContext context)
         {
-            if (ArcadeInput.Instance == null)
-                return;
-
-            if (!ArcadeInput.Instance.ButtonExitPressedThisFrame)
-                return;
-
             float now = Time.unscaledTime;
 
             if (!_exitArmed || (now - _lastExitPressTime) > exitDoublePressWindow)
@@ -185,11 +182,18 @@ namespace ArcadesTemplate.Core
 
         public void ExitGame()
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
             Application.Quit();
-#endif
+        }
+
+        void OnEnable()
+        {
+            InputManager.instance.players[0].Subscribe("Exit", HandleExitInput);
+            SceneManager.sceneLoaded += SceneLoaded;
+        }
+        void OnDisable()
+        {
+            InputManager.instance.players[0].Unsubscribe("Exit", HandleExitInput);
+            SceneManager.sceneLoaded -= SceneLoaded;
         }
     }
 }
