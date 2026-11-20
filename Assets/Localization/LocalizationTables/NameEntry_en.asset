@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: NameEntry_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 174c0d3275cc4eb40b5f238b23311538, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 8227488613365448775
+  m_TableData:
+  - m_Id: 13951193088
+    m_Localized: NEW HIGH SCORE!!!\nENTER YOUR NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976473600
+    m_Localized: 'MOVE: CHANGE LETTER / POSITION\nA: OK B: BACK'
+    m_Metadata:
+      m_Items:
+      - rid: 8227488613365448775
+  - m_Id: 86936276992
+    m_Localized: 'SCORE: {score}'
+    m_Metadata:
+      m_Items:
+      - rid: 8227488613365448775
+  - m_Id: 218075385856
+    m_Localized: OFFENSIVE NAME - CHANGE LETTERS
+    m_Metadata:
+      m_Items:
+      - rid: 8227488613365448775
+  references:
+    version: 2
+    RefIds:
+    - rid: 8227488613365448775
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 86936276992
+        - id: 173976473600
+        - id: 218075385856

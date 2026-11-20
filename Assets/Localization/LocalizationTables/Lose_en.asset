@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lose_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b1b55fd1210c17f45ab7115e815db895, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 8227488610163884290
+  m_TableData:
+  - m_Id: 365148655616
+    m_Localized: GAME OVER
+    m_Metadata:
+      m_Items:
+      - rid: 8227488610163884290
+  - m_Id: 108964761600
+    m_Localized: 'SCORE: {score}'
+    m_Metadata:
+      m_Items:
+      - rid: 8227488610163884290
+  - m_Id: 126287237120
+    m_Localized: 'PRESS A TO PLAY AGAIN
+
+      B: MAIN MENU'
+    m_Metadata:
+      m_Items:
+      - rid: 8227488610163884290
+  - m_Id: 158285582336
+    m_Localized: 'HIGH SCORE SAVED
+
+      PRESS A TO PLAY AGAIN
+
+      B: MAIN MENU'
+    m_Metadata:
+      m_Items:
+      - rid: 8227488610163884290
+  references:
+    version: 2
+    RefIds:
+    - rid: 8227488610163884290
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 365148655616
+        - id: 108964761600
+        - id: 126287237120
+        - id: 158285582336

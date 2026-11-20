@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-Bulgarian (bg)
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Localization-String-Tables-Bulgarian (bg)
+  m_GUID: 7009b40ffc1fea7439d6f406e73dcf2a
+  m_SerializeEntries:
+  - m_GUID: 49fe81846f3abf4489c0bf243f4d7150
+    m_Address: Start_bg
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-bg
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81d6ff31eb4c5484ead72067cebcff00
+    m_Address: Lose_bg
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-bg
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd41c461da9ac0144868372b208920f9
+    m_Address: NameEntry_bg
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-bg
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c244504d18a4e6b48a8900f10c918fb5
+    m_Address: Win_bg
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-bg
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 0f4f3023fb47f814995e6b4f543b5bfd, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 0c73ba0fbc4f720459732b0f54b2b301, type: 2}
+    - {fileID: 11400000, guid: a7311bd0d6ee4ba44a1a975cf3e07574, type: 2}
