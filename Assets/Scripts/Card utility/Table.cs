@@ -110,4 +110,20 @@ public class Table : MonoBehaviour
         allSlots[numberOfCardsPresnt].PutCard(card);
         numberOfCardsPresnt++;
     }
+
+    public int size() 
+    {
+        return numberOfCardsPresnt;
+    }
+
+    public int GetSum() 
+    {
+        int sum = 0;
+        for (int i = 0; i < numberOfCardsPresnt; i++)
+        {
+            sum += allSlots[numberOfCardsPresnt].peekTop().value;
+        }
+
+        return sum;
+    }
 }

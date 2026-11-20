@@ -61,4 +61,10 @@ public class Player : MonoBehaviour
         InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", DrawCard);
         InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
     }
+
+    public void Hit() 
+    {
+        Card card = Deck.instance.takeTopCard();
+        table.PutNewCard(card);
+    }
 }
