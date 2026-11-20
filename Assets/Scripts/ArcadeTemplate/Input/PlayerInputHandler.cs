@@ -54,12 +54,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         UnsubscribeList();
 
-        Debug.Log("This: " + context.control.device.deviceId);
-        for (int i = 0; i < Gamepad.all.Count; i++)
-        {
-            Debug.Log("all: " + i + " " + Gamepad.all[i].name + " " + Gamepad.all[i].deviceId);
-        }
-
         List<Action<InputAction.CallbackContext>> funcs = actionFunctionPairsButtons[context.action.name];
         foreach (Action<InputAction.CallbackContext> func in funcs)
         {

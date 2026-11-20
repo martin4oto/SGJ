@@ -7,36 +7,45 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
     public GameObject playerInputHandlePrefab;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    int boundInputs;
     public List<PlayerInputHandler> players = new();
     void Awake()
     {
         instance = this;
 
         DontDestroyOnLoad(gameObject);
-
-        for (int i = 0; i < Gamepad.all.Count; i++)
-        {
-            Debug.Log(Gamepad.all[i].deviceId + " " + Gamepad.all[i].name);
-        }
-
-        for (int i = 0; i < 2; i++)
-        {
-            if (boundInputs < 2 && boundInputs < Gamepad.all.Count)
+        if (Gamepad.all.Count != 0){
+            for (int i = 0; i < Gamepad.all.Count; i++)
             {
-                Debug.Log(Gamepad.all[boundInputs].deviceId);
-                GameObject handlerObject = Instantiate(playerInputHandlePrefab, transform);
-                players.Add(handlerObject.GetComponent<PlayerInputHandler>());
-                players[boundInputs].boundToDeviceId = Gamepad.all[boundInputs].deviceId;
-                boundInputs++;
+                Debug.Log(Gamepad.all[i].deviceId + " " + Gamepad.all[i].name);
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                if (i < Gamepad.all.Count)
+                {
+                    Debug.Log(Gamepad.all[i].deviceId);
+                    GameObject handlerObject = Instantiate(playerInputHandlePrefab, transform);
+                    players.Add(handlerObject.GetComponent<PlayerInputHandler>());
+                    players[i].boundToDeviceId = Gamepad.all[i].deviceId;
+                }
+            }
+        }else{
+            for (int i = 0; i < Joystick.all.Count; i++)
+            {
+                Debug.Log(Joystick.all[i].deviceId + " " + Joystick.all[i].name);
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                if (i < Joystick.all.Count)
+                {
+                    Debug.Log(Joystick.all[i].deviceId);
+                    GameObject handlerObject = Instantiate(playerInputHandlePrefab, transform);
+                    players.Add(handlerObject.GetComponent<PlayerInputHandler>());
+                    players[i].boundToDeviceId = Joystick.all[i].deviceId;
+                }
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }
