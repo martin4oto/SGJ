@@ -59,6 +59,8 @@ public class Slot : MonoBehaviour, ICardHolder
         {
             
         }
+
+        UpdateVisual();
     }
 
     void Start()

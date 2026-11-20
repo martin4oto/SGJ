@@ -105,6 +105,8 @@ public class Table : MonoBehaviour
             return;
         }
 
+        allSlots[numberOfCardsPresnt].gameObject.SetActive(true);
+
         allSlots[numberOfCardsPresnt].PutCard(card);
         numberOfCardsPresnt++;
     }

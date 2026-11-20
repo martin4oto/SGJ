@@ -59,6 +59,8 @@ public class Deck : MonoBehaviour, ICardHolder
     //returns null if there arent any cards
     public Card takeTopCard() 
     {
+        Debug.Log(allCards + " " + allCards.Count);
+
         Card card = allCards[allCards.Count - 1];
         allCards.RemoveAt(allCards.Count - 1);
         return card;

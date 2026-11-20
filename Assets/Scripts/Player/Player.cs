@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Table table;
+    public Table table;
+    public Hand hand;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -10,9 +11,29 @@ public class Player : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    bool firstFrameTest = true;
     void Update()
     {
-        
+        if (firstFrameTest) 
+        {
+            DrawCard();
+        }
+    }
+
+    public void DrawCard()
+    {
+        if (!hand.hasCards())
+        {
+            Card card = Deck.instance.takeTopCard();
+            hand.PutCard(card);
+        }
+    }
+
+    public void ChangeSelection() 
+    {
+    }
+
+    public void CardInteract() 
+    {
     }
 }

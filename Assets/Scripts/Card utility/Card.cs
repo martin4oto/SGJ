@@ -9,4 +9,9 @@ public class Card
     {
         value = _value;
     }
+
+    public override string ToString() 
+    {
+        return value + "";   
+    }
 }
