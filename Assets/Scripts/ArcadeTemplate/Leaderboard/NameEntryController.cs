@@ -1,11 +1,11 @@
 using UnityEngine;
 using TMPro;
-using ArcadesTemplate.Input;
 using ArcadesTemplate.Core;
 using System.Collections.Generic;
 
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.InputSystem;
 
 namespace ArcadesTemplate.Leaderboard
 {
@@ -76,18 +76,9 @@ namespace ArcadesTemplate.Leaderboard
             UpdateLettersVisual();
         }
 
-        private void Update()
+        private void HandleStick(InputAction.CallbackContext context)
         {
-            if (ArcadeInput.Instance == null)
-                return;
-
-            HandleStick();
-            HandleButtons();
-        }
-
-        private void HandleStick()
-        {
-            Vector2 move = ArcadeInput.Instance.Move;
+            Vector2 move = context.ReadValue<Vector2>();;
             float now = Time.unscaledTime;
 
             if (now - _lastMoveTime < moveRepeatDelay)
@@ -123,32 +114,45 @@ namespace ArcadesTemplate.Leaderboard
                 UpdateLettersVisual();
             }
         }
-
-        private void HandleButtons()
+        void HandleButtonA(InputAction.CallbackContext context)
         {
-            if (ArcadeInput.Instance.ButtonAPressedThisFrame)
+            if (!context.performed) return;
+          
+            if (_selectedPos < _indices.Length - 1)
             {
-                if (_selectedPos < _indices.Length - 1)
-                {
-                    _selectedPos++;
-                    UpdateLettersVisual();
-                }
-                else
-                {
-                    ConfirmName();
-                }
+                _selectedPos++;
+                UpdateLettersVisual();
             }
+            else
+            {
+                ConfirmName();
+            }
+        }
+        void HandleButtonB(InputAction.CallbackContext context)
+        {
+            // Back to the last result screen (win/lose), no credit cost
+            if (!context.performed) return;
 
-            if (ArcadeInput.Instance.ButtonBPressedThisFrame)
+            var sceneMgr = ArcadeSceneManager.Instance;
+            if (sceneMgr != null)
             {
-                // Back to the last result screen (win/lose), no credit cost
-                var sceneMgr = ArcadeSceneManager.Instance;
-                if (sceneMgr != null)
-                {
-                    sceneMgr.HasHandledNameEntryForLastScore = true;
-                    sceneMgr.ReturnToLastResultScreen();
-                }
+                sceneMgr.HasHandledNameEntryForLastScore = true;
+                sceneMgr.ReturnToLastResultScreen();
             }
+        }
+
+        void OnEnable()
+        {
+            InputManager.instance.players[0].Subscribe("ButtonA"   , HandleButtonA);
+            InputManager.instance.players[0].Subscribe("ButtonB", HandleButtonB);
+            InputManager.instance.players[0].Subscribe("Stick", HandleStick);
+            
+        }
+        void OnDisable()
+        {
+            InputManager.instance.players[0].Unsubscribe("ButtonA"   , HandleButtonA);
+            InputManager.instance.players[0].Unsubscribe("ButtonB", HandleButtonB);
+            InputManager.instance.players[0].Unsubscribe("Stick", HandleStick);
         }
 
         private void IncrementLetter(int direction)
@@ -188,6 +192,7 @@ namespace ArcadesTemplate.Leaderboard
 
         private void ConfirmName()
         {
+            Debug.Log("Confirm name");
             string name = new string(new[]
             {
                 _alphabet[_indices[0]],

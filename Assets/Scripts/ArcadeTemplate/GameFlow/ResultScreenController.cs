@@ -1,10 +1,10 @@
 using UnityEngine;
 using TMPro;
-using ArcadesTemplate.Input;
 using ArcadesTemplate.Core;
 using ArcadesTemplate.Leaderboard;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.InputSystem;
 
 namespace ArcadesTemplate.GameFlow
 {
@@ -71,28 +71,25 @@ namespace ArcadesTemplate.GameFlow
 
         protected virtual void Update()
         {
-            if (_leaving)
-                return;
-
             _timeSinceLoad += Time.unscaledDeltaTime;
-            if (_timeSinceLoad < inputDelay)
-                return;
+        }
+        void Replay(InputAction.CallbackContext context)
+        {
+            if (_leaving) return;
+            if (_timeSinceLoad < inputDelay) return;
 
-            var input = ArcadeInput.Instance;
             var sceneMgr = ArcadeSceneManager.Instance;
-            if (input == null || sceneMgr == null)
-                return;
+            _leaving = true;
+            sceneMgr.Replay();
+        }
+        void Return(InputAction.CallbackContext context)
+        {
+            if (_leaving) return;
+            if (_timeSinceLoad < inputDelay) return;
 
-            if (input.ButtonStartPressedThisFrame || input.ButtonAPressedThisFrame)
-            {
-                _leaving = true;
-                sceneMgr.Replay();
-            }
-            else if (input.ButtonBPressedThisFrame)
-            {
-                _leaving = true;
-                sceneMgr.LoadStartScreen();
-            }
+            var sceneMgr = ArcadeSceneManager.Instance;
+            _leaving = true;
+            sceneMgr.LoadStartScreen();
         }
 
         protected static string L(LocalizedString ls, object args, string fallback)
@@ -102,6 +99,17 @@ namespace ArcadesTemplate.GameFlow
 
             ls.Arguments = args != null ? new object[] { args } : null;
             return ls.GetLocalizedString();
+        }
+
+        void OnEnable()
+        {
+            InputManager.instance.players[0].Subscribe("ButtonA"  , Replay);
+            InputManager.instance.players[0].Subscribe("ButtonB", Return);
+        }
+        void OnDisable()
+        {
+            InputManager.instance.players[0].Unsubscribe("ButtonA"   , Replay);
+            InputManager.instance.players[0].Unsubscribe("ButtonB", Return);
         }
     }
 }
