@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ChangeSelection() 
+    public void ChangeSelection(int move) 
     {
     }
 
