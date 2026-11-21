@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             firstFrameTest = false;
         }
 
-        if (isHoldingA && isHoldingB)
+        if (isHoldingA && isHoldingB && hand.hasCards())
         {
             //fire
             burnTimer += Time.deltaTime;
@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
     {
         if (table.canPutAnother())
         {
+            Dealer.instance.ChangeId(playerIndex);
             if (hand.hasCards())
             {
                 hand.lastSprite = rightHandHold;
