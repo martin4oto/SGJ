@@ -61,7 +61,6 @@ public class SlamHand : MonoBehaviour
 
     public void Travel(Vector3 a, Vector3 b, float pixelsPerSecond, float cc)
     {
-        Debug.Log(pixelsPerSecond);
         pointA = a;
         pointB = b;
         totalTravelTime = Vector3.Distance(pointA, pointB)/pixelsPerSecond;

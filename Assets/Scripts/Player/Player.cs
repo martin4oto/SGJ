@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
         obsession += Time.deltaTime;
         slider.value = obsession;
 
-        if (isSmoking)
+        if (isSmoking && !isHoldingA)
         {
             obsession -= Time.deltaTime * calmingEffect;
             if (obsession < 0) obsession = 0;
@@ -90,6 +90,10 @@ public class Player : MonoBehaviour
 
         if (pressedA && pressedATime <= Time.time - holdThreshold)
         {
+            if (!isHoldingA)
+            {
+                hand.StartHoldHandUp();
+            }
             isHoldingA = true;
         }
         if (pressedB && pressedBTime <= Time.time - holdThreshold)
@@ -150,6 +154,10 @@ public class Player : MonoBehaviour
             if (!isHoldingA)
             {
                 CardInteract();
+            }
+            else
+            {
+                hand.StopHoldHandUp();
             }
             pressedA = false;
             isHoldingA = false;
