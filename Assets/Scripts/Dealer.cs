@@ -33,7 +33,6 @@ public class Dealer : MonoBehaviour
     void Update()
     {   
         scoreText.text = score + "$";
-    {
         timerToSwap += Time.deltaTime;
         if (timerToSwap> maxTimerToStop)
         {
@@ -53,7 +52,6 @@ public class Dealer : MonoBehaviour
 
         eyes.transform.localScale = new Vector3(eyeDirecton * eyes.transform.localScale.x, eyes.transform.localScale.y, eyes.transform.localScale.z);
     }
-
     public static void SlamTheTable(int playerID) 
     {
         instance.ChangeId(playerID);
