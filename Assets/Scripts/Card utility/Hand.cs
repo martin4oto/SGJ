@@ -37,6 +37,10 @@ public class Hand : MonoBehaviour, ICardHolder
         return holdingCard.takeTopCard();
     }
 
+    public void Hit() 
+    {
+    }
+
     public Card peekTop()
     {
         if (!holdsCard) return null;

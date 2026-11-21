@@ -227,9 +227,12 @@ public class Player : MonoBehaviour
 
     public void Hit()
     {
-        Card card = Deck.instance.takeTopCard();
-        table.PutNewCard(card);
-        obsession = 0;
+        if (table.canPutAnother())
+        {
+            Card card = Deck.instance.takeTopCard();
+            table.PutNewCard(card);
+            obsession = 0;
+        }
     }
 
     public void Burn()

@@ -247,4 +247,9 @@ public class Table : MonoBehaviour
         }
         return true;
     }
+
+    public bool canPutAnother() 
+    {
+        return size() < maximumTableSlots;
+    }
 }
