@@ -1056,6 +1056,8 @@ MonoBehaviour:
   rightHandPoint: {fileID: 21300000, guid: 9563b13f21adfb2498a0d7a380ae1b53, type: 3}
   rightHandHold: {fileID: 21300000, guid: fb8836196e5ebfe47b5b0c6510328a04, type: 3}
   slamHand: {fileID: 1930784722751127635}
+  otherPlayer: {fileID: 0}
+  maxBurnTimer: 2
 --- !u!1 &6857674551320207545
 GameObject:
   m_ObjectHideFlags: 0

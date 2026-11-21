@@ -27,6 +27,12 @@ public class Player : MonoBehaviour
     float pressedBTime;
     bool isSmoking = false;
 
+    public Player otherPlayer;
+
+
+    float burnTimer = 0;
+    public float maxBurnTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,10 +65,26 @@ public class Player : MonoBehaviour
                 table.PutNewCard(card);
             }
 
-            Card card1 = Deck.instance.takeTopCard();
-            table.ThrowCard(card1);
+            //Card card1 = Deck.instance.takeTopCard();
+            //table.ThrowCard(card1);
 
             firstFrameTest = false;
+        }
+
+        if (isHoldingA && isHoldingB)
+        {
+            //fire
+            burnTimer += Time.deltaTime;
+
+            if (burnTimer > maxBurnTimer) 
+            {
+                burnTimer = 0;
+                Burn();
+            }
+        }
+        else
+        {
+            burnTimer = 0;
         }
 
         if (pressedA && pressedATime <= Time.time - holdThreshold)
@@ -90,6 +112,14 @@ public class Player : MonoBehaviour
         if (rawValueX == 0) rawValueX = -1;
 
         if (playerIndex == 1) rawValueX *= -1;
+
+        if (isHoldingA && rawValueX == 1) 
+        {
+            if (ThrowCardToOther())
+            {
+                return;
+            }
+        }
 
         int rawValueY = Mathf.CeilToInt(value.y);
 
@@ -186,7 +216,7 @@ public class Player : MonoBehaviour
         Hit();
     }
 
-        public void Hit()
+    public void Hit()
     {
         Card card = Deck.instance.takeTopCard();
         table.PutNewCard(card);
@@ -198,6 +228,7 @@ public class Player : MonoBehaviour
         if (hand.peekTop() != null)
         {
             hand.takeTopCard();
+            hand.SwapSprite(rightHandDefault);
         }
     }
 
@@ -221,5 +252,26 @@ public class Player : MonoBehaviour
     {
         slamHand.Slam(playerIndex);
         slamHand.SwapSprite(leftHandDefault);
+    }
+
+    bool canCatch() 
+    {
+        return !table.hasThrownCard();
+    }
+
+    void CatchCard(Card card) 
+    {
+        table.ThrowCard(card);
+    }
+
+    bool ThrowCardToOther() 
+    {
+        if (hand.peekTop() != null && otherPlayer.canCatch()) 
+        {
+            otherPlayer.CatchCard(hand.takeTopCard());
+            hand.SwapSprite(rightHandDefault);
+            return true;
+        }
+        return false;
     }
 }
