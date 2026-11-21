@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             firstFrameTest = false;
         }
 
-        if (isHoldingA && isHoldingB)
+        if (isHoldingA && isHoldingB && hand.hasCards())
         {
             //fire
             burnTimer += Time.deltaTime;
