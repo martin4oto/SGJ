@@ -60,7 +60,7 @@ public class Dealer : MonoBehaviour
 
     public static void playerSuspiciousActivity(int playerId) 
     {
-        if (playerId == currentPlayerId)
+        if (playerId == instance.currentPlayerId)
         {
             Lose();
         }
