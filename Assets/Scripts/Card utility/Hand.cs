@@ -5,7 +5,9 @@ public class Hand : MonoBehaviour, ICardHolder
 {
     public Slot holdingCard;
     bool holdsCard = false;
-    Vector3 defaultPoint;
+    public Vector3 defaultPoint;
+    public Vector3 slamPoint;
+    public Vector3 pointPoint;
     Vector3 pointA;
     Vector3 pointB;
     float totalTravelTime;
@@ -13,11 +15,16 @@ public class Hand : MonoBehaviour, ICardHolder
     bool traveling;
     public Vector3 holdPoint;
     float curveComponent;
+    public bool slamEnd;
+    public Sprite lastSprite;
+    float switchTimer;
 
     void Awake()
     {
         defaultPoint = transform.localPosition;
-        holdPoint = defaultPoint + new Vector3(-200, 200, 0);
+        slamPoint = defaultPoint + new Vector3(-50, 200, 0);
+        pointPoint = defaultPoint + new Vector3(-50, 50, 0); 
+        holdPoint = defaultPoint + new Vector3(-200, 225, 0);
     }
 
     //true if there are cards
@@ -77,6 +84,24 @@ public class Hand : MonoBehaviour, ICardHolder
             transform.localPosition = Vector3.Lerp(pointA, pointB, 1 - Mathf.Pow(timer/totalTravelTime, curveComponent));
             timer -= Time.deltaTime;
             if (timer <= 0) traveling = false;
+        }
+        else
+        {
+            if (slamEnd)
+            {
+                Travel(slamPoint, pointPoint, 5000f, 1);
+                slamEnd = false;
+                switchTimer = 0.2f;
+            }
+            if (switchTimer > 0)
+            {
+                switchTimer -= Time.deltaTime;
+                if (switchTimer < 0)
+                {
+                    SwapSprite(lastSprite);
+                    Travel(pointPoint, defaultPoint, 150f, 1);
+                }
+            }
         }
     }
 

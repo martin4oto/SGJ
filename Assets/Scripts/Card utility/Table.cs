@@ -202,6 +202,7 @@ public class Table : MonoBehaviour
             allSlots[i].takeTopCard();
             allSlots[i].gameObject.SetActive(false);
         }
+        Dealer.instance.score += 100;
         CalculatePoints();
         numberOfCardsPresnt = 0;
     }
