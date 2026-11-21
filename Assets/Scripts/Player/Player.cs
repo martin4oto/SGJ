@@ -232,29 +232,34 @@ public class Player : MonoBehaviour
 
     public void Hit()
     {
-        if (hand.hasCards())
+        if (table.canPutAnother())
         {
-            hand.lastSprite = rightHandHold;
-        }
-        else
-        {
-            hand.lastSprite = rightHandDefault;
-        }
-        
-        hand.SwapSprite(rightHandPoint);
-        hand.Travel(hand.defaultPoint, hand.slamPoint,  450f, 4);
-        
-        hand.slamEnd = true;
-        Card card = Deck.instance.takeTopCard();
-        table.PutNewCard(card);
-        obsession = 0;
+            if (hand.hasCards())
+            {
+                hand.lastSprite = rightHandHold;
+            }
+            else
+            {
+                hand.lastSprite = rightHandDefault;
+            }
+            hand.SwapSprite(rightHandPoint);
+            hand.Travel(hand.defaultPoint, hand.slamPoint,  450f, 4);
+            
+            hand.slamEnd = true;
+            Card card = Deck.instance.takeTopCard();
+            table.PutNewCard(card);
+            obsession = 0;
 
-        int sum = table.GetSum();
+            
+            int sum = table.GetSum();
 
-        if (sum == 21)
-        {
-            SumReached();
+            if (sum == 21)
+            {
+                SumReached();
+            }
         }
+
+
     }
 
     public void Burn()

@@ -15,6 +15,8 @@ public class Dealer : MonoBehaviour
     public Slider frustrationMeter;
     public TextMeshProUGUI scoreText;
 
+    public Transform eyes;
+
     float frustration = 0f;
     public float score;
 
@@ -24,15 +26,32 @@ public class Dealer : MonoBehaviour
         instance = this;
     }
 
+    float timerToSwap = 0;
+    public float maxTimerToStop;
+
     // Update is called once per frame
     void Update()
     {   
         scoreText.text = score + "$";
+    {
+        timerToSwap += Time.deltaTime;
+        if (timerToSwap> maxTimerToStop)
+        {
+            ChangeId();
+        }
+
         if (frustration > 0) 
         {
             Frustrate(-Time.deltaTime * frustrationDecay);
         }
         scoreText.color = Color.HSVToRGB(Time.time/5%1, 1, 1);
+    }
+
+    void fixEyes() 
+    {
+        float eyeDirecton = (currentPlayerId - 0.5f) * -2;
+
+        eyes.transform.localScale = new Vector3(eyeDirecton * eyes.transform.localScale.x, eyes.transform.localScale.y, eyes.transform.localScale.z);
     }
 
     public static void SlamTheTable(int playerID) 
@@ -45,14 +64,18 @@ public class Dealer : MonoBehaviour
     {
         currentPlayerId = currentPlayerId == 0 ? 1 : 0;
         Debug.Log(currentPlayerId);
+        fixEyes();
         CheckForThrownCard();
+        timerToSwap = 0;
     }
 
     void ChangeId(int id) 
     {
         currentPlayerId = id;
         Debug.Log(currentPlayerId);
+        fixEyes();
         CheckForThrownCard();
+        timerToSwap = 0;
     }
 
     void Frustrate(float amount) 
