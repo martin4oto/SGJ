@@ -14,66 +14,107 @@ public class Dealer : MonoBehaviour
 
     public Slider frustrationMeter;
     public TextMeshProUGUI scoreText;
+    public Image warningL;
+    public Image warningR;
 
     public Transform eyes;
+    int lookDir;
 
     float frustration = 0f;
     public float score;
+    float attention;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
+        fixEyes();
     }
 
-    float timerToSwap = 0;
     public float maxTimerToStop;
 
     // Update is called once per frame
     void Update()
     {   
         scoreText.text = score + "$";
-        timerToSwap += Time.deltaTime;
-        if (timerToSwap> maxTimerToStop)
-        {
-            ChangeId();
-        }
+        attention += 1/maxTimerToStop * Time.deltaTime;
 
         if (frustration > 0) 
         {
             Frustrate(-Time.deltaTime * frustrationDecay);
         }
         scoreText.color = Color.HSVToRGB(Time.time/5%1, 1, 1);
+
+        if (attention >= 1)
+        {
+            attention = 0;
+            ChangeId();
+        }
+        else
+        {
+            if (lookDir == 1)
+            {
+                warningR.fillAmount = attention;
+            }
+            else
+            {
+
+                warningL.fillAmount = attention;
+            }
+        }
     }
 
     void fixEyes() 
     {
-        float eyeDirecton = (currentPlayerId - 0.5f) * -2;
+        lookDir = Mathf.RoundToInt((currentPlayerId - 0.5f) * -2);
 
-        eyes.transform.localScale = new Vector3(eyeDirecton * Mathf.Abs(eyes.transform.localScale.x), eyes.transform.localScale.y, eyes.transform.localScale.z);
+        eyes.transform.localScale = new Vector3(lookDir * Mathf.Abs(eyes.transform.localScale.x), eyes.transform.localScale.y, eyes.transform.localScale.z);
+    
+        if (lookDir == 1)
+        {
+            warningL.transform.parent.gameObject.SetActive(false);
+            warningR.transform.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            warningL.transform.parent.gameObject.SetActive(true);
+            warningR.transform.parent.gameObject.SetActive(false);
+        }
+    
     }
     public static void SlamTheTable(int playerID) 
     {
-        instance.ChangeId(playerID);
         instance.Frustrate(frustrationBySlamming);
+        if (playerID == 0 && instance.lookDir == 1){
+            instance.attention -= 0.1f;
+        }else if (playerID == 0 && instance.lookDir == -1){
+            instance.attention += 0.2f;
+        }else if (playerID == 1 && instance.lookDir == 1){
+            instance.attention += 0.2f;
+        }else if (playerID == 1 && instance.lookDir == -1){
+            instance.attention -= 0.1f;
+        }
+
+        if (instance.attention < 0) instance.attention = 0;
     }
 
-    void ChangeId() 
+    public void ChangeId() 
     {
         currentPlayerId = currentPlayerId == 0 ? 1 : 0;
         Debug.Log(currentPlayerId);
         fixEyes();
         CheckForThrownCard();
-        timerToSwap = 0;
+        attention = 0;
     }
 
-    void ChangeId(int id) 
+    public void ChangeId(int id) 
     {
         currentPlayerId = id;
         Debug.Log(currentPlayerId);
         fixEyes();
         CheckForThrownCard();
-        timerToSwap = 0;
+        attention = 0;
     }
 
     void Frustrate(float amount) 

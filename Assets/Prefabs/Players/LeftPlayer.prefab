@@ -1013,6 +1013,7 @@ MonoBehaviour:
   tableRow: {fileID: 4709741930705646511}
   highlighterRow: {fileID: 7278774149980017477}
   allSlots: []
+  playerIndex: 0
   scoreText: {fileID: 7817155453263066287}
   ThrownCardSlot: {fileID: 1629945775314355575}
   thrownHighlight: {fileID: 2653427469497288465}

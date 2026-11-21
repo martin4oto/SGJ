@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
     {
         if (table.canPutAnother())
         {
+            Dealer.instance.ChangeId(playerIndex);
             if (hand.hasCards())
             {
                 hand.lastSprite = rightHandHold;

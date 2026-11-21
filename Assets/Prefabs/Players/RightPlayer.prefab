@@ -397,6 +397,7 @@ MonoBehaviour:
   tableRow: {fileID: 713365238388541166}
   highlighterRow: {fileID: 4314199861281308801}
   allSlots: []
+  playerIndex: 1
   scoreText: {fileID: 8555879440628002197}
   ThrownCardSlot: {fileID: 3794424853692379059}
   thrownHighlight: {fileID: 3457989309533857394}

@@ -16,6 +16,7 @@ public class Table : MonoBehaviour
     int numberOfCardsPresnt;
 
     int currentSelected;
+    public int playerIndex;
 
     public TMP_Text scoreText;
 
@@ -205,6 +206,7 @@ public class Table : MonoBehaviour
         Dealer.instance.score += 100;
         CalculatePoints();
         numberOfCardsPresnt = 0;
+        Dealer.instance.ChangeId(playerIndex);
     }
 
     public void ThrowCard(Card card) 
