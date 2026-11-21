@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hand : MonoBehaviour, ICardHolder
 {
@@ -7,7 +8,7 @@ public class Hand : MonoBehaviour, ICardHolder
 
     void Start() 
     {
-        holdingCard.gameObject.SetActive(false);
+        //holdingCard.gameObject.SetActive(false);
     }
 
     //true if there are cards
@@ -22,7 +23,7 @@ public class Hand : MonoBehaviour, ICardHolder
         if (!holdsCard) return null;
 
         holdsCard = false;
-        holdingCard.gameObject.SetActive(false);
+        //holdingCard.gameObject.SetActive(false);
 
         return holdingCard.takeTopCard();
     }
@@ -42,8 +43,12 @@ public class Hand : MonoBehaviour, ICardHolder
         else 
         {
             holdsCard = true;
-            holdingCard.gameObject.SetActive(true);
+            //holdingCard.gameObject.SetActive(true);
         }
         holdingCard.PutCard(card);
+    }
+    public void SwapSprite(Sprite newSprite)
+    {
+        transform.GetChild(0).GetComponent<Image>().sprite = newSprite;
     }
 }

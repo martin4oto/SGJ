@@ -38,6 +38,7 @@ public class Table : MonoBehaviour
             Transform currentSlot = Instantiate(slotPrefab).transform;
 
             currentSlot.SetParent(tableRow);
+            currentSlot.localScale = Vector3.one;
 
             allSlots[i] = currentSlot.GetComponent<Slot>();
             allSlots[i].currentCard = null;
@@ -99,29 +100,23 @@ public class Table : MonoBehaviour
     Card DrawCard(Card _card)
     {
         if (_card != null) return _card;
-        else 
-        {
-            return Deck.instance.takeTopCard();
-        }
-        return null;
+
+        return Deck.instance.takeTopCard();
     }
 
     Card GetThrownCard(Card _card)
     {
         if (_card != null) return _card;
-        else
-        {
-            Card card = ThrownCardSlot.takeTopCard();
-            ThrownCardSlot.gameObject.SetActive(false);
 
-            currentSelected = 0;
-            highlights[currentSelected].SetActive(true);
+        Card card = ThrownCardSlot.takeTopCard();
+        ThrownCardSlot.gameObject.SetActive(false);
 
-            thrownSelected = false;
+        currentSelected = 0;
+        highlights[currentSelected].SetActive(true);
 
-            return card;
-        }
-        return null;
+        thrownSelected = false;
+
+        return card;
     }
 
     //if _card == null it just takes it
