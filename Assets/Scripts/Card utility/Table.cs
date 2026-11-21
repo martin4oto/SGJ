@@ -203,7 +203,7 @@ public class Table : MonoBehaviour
             allSlots[i].takeTopCard();
             allSlots[i].gameObject.SetActive(false);
         }
-        Dealer.instance.score += 100;
+        Dealer.instance.score += 250;
         CalculatePoints();
         numberOfCardsPresnt = 0;
         Dealer.instance.ChangeId(playerIndex);
@@ -215,6 +215,7 @@ public class Table : MonoBehaviour
 
         ThrownCardSlot.gameObject.SetActive(true);
         ThrownCardSlot.PutCard(card);
+        Dealer.instance.score += 10;
     }
 
     public bool hasThrownCard() 

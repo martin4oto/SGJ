@@ -561,7 +561,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 10
+  m_MaxValue: 15
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -919,7 +919,7 @@ MonoBehaviour:
   hand: {fileID: 4185458123675274094}
   playerIndex: 1
   slider: {fileID: 8421440470328071107}
-  maxObsession: 10
+  maxObsession: 15
   calmingEffect: 0.75
   leftHandDefault: {fileID: 21300000, guid: cb3e2d2f6e276da4488814f724e9210f, type: 3}
   leftHandSmoke: {fileID: 21300000, guid: f9dd69d5bc71cdd469d54d0bbefdca5f, type: 3}
@@ -932,6 +932,8 @@ MonoBehaviour:
   - I want to hit
   - GAMBLE GAMBLE GAMBLE
   - I NEED TO HIT
+  lowSmoke: {fileID: 0}
+  highSmoke: {fileID: 0}
   slamHand: {fileID: 1930784722751127635}
   otherPlayer: {fileID: 0}
   maxBurnTimer: 2
