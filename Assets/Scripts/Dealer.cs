@@ -38,11 +38,15 @@ public class Dealer : MonoBehaviour
     void ChangeId() 
     {
         currentPlayerId = currentPlayerId == 0 ? 1 : 0;
+        Debug.Log(currentPlayerId);
+        CheckForThrownCard();
     }
 
     void ChangeId(int id) 
     {
         currentPlayerId = id;
+        Debug.Log(currentPlayerId);
+        CheckForThrownCard();
     }
 
     void Frustrate(float amount) 
@@ -52,5 +56,26 @@ public class Dealer : MonoBehaviour
         if (frustration < 0) frustration = 0;
 
         frustrationMeter.value = frustration;
+    }
+
+    public static void playerSuspiciousActivity(int playerId) 
+    {
+        if (playerId == currentPlayerId)
+        {
+            Lose();
+        }
+    }
+
+    static void Lose() 
+    {
+        //gotina animaciq na zaguba
+    }
+
+    void CheckForThrownCard() 
+    {
+        if (!players[currentPlayerId].canCatch())
+        {
+            Lose();
+        }
     }
 }
