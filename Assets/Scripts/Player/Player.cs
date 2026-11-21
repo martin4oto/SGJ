@@ -1,11 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public Table table;
     public Hand hand;
     public int playerIndex;
+    public Slider slider;
+
+    float obsession = 0;
+    public float maxObsession;
+    public float calmingEffect;
+
+    public SlamHand slamHand;
+
+    bool isSmoking = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,6 +26,20 @@ public class Player : MonoBehaviour
     bool firstFrameTest = true;
     void Update()
     {
+        obsession += Time.deltaTime;
+        slider.value = obsession;
+
+        if (isSmoking) 
+        {
+            obsession -= Time.deltaTime * calmingEffect;
+        }
+
+        if (obsession > maxObsession)
+        {
+            Hit();
+            obsession = 0;
+        }
+
         if (firstFrameTest) 
         {
             for (int i = 0; i < 2; i++)
@@ -94,6 +118,7 @@ public class Player : MonoBehaviour
     {
         Card card = Deck.instance.takeTopCard();
         table.PutNewCard(card);
+        obsession = 0;
     }
 
     public void Burn(InputAction.CallbackContext context)
@@ -104,5 +129,17 @@ public class Player : MonoBehaviour
         {
             hand.takeTopCard();
         }
+    }
+
+    public void StartSmoking() 
+    {
+        isSmoking = true;
+        slamHand.StartSmoking();
+    }
+
+    public void StopSmoking()
+    {
+        isSmoking = false;
+        slamHand.StopSmoking();
     }
 }

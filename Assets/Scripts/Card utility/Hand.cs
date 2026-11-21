@@ -11,7 +11,7 @@ public class Hand : MonoBehaviour, ICardHolder
     }
 
     //true if there are cards
-    public bool hasCards() 
+    public bool hasCards()
     {
         return holdsCard;
     }
