@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using ArcadesTemplate.Core;
+using TMPro;
 
 public class Dealer : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Dealer : MonoBehaviour
     public float frustrationDecay;
 
     public Slider frustrationMeter;
+    public TextMeshProUGUI scoreText;
 
     public Transform eyes;
 
@@ -29,7 +31,8 @@ public class Dealer : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        scoreText.text = score + "$";
         timerToSwap += Time.deltaTime;
         if (timerToSwap> maxTimerToStop)
         {
@@ -40,6 +43,7 @@ public class Dealer : MonoBehaviour
         {
             Frustrate(-Time.deltaTime * frustrationDecay);
         }
+        scoreText.color = Color.HSVToRGB(Time.time/5%1, 1, 1);
     }
 
     void fixEyes() 
@@ -48,7 +52,6 @@ public class Dealer : MonoBehaviour
 
         eyes.transform.localScale = new Vector3(eyeDirecton * eyes.transform.localScale.x, eyes.transform.localScale.y, eyes.transform.localScale.z);
     }
-
     public static void SlamTheTable(int playerID) 
     {
         instance.ChangeId(playerID);

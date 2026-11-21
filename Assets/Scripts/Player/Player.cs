@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour
     public Sprite rightHandDefault;
     public Sprite rightHandPoint;
     public Sprite rightHandHold;
+    public TextMeshProUGUI obsessionBox;
+    public List<string> obsessionTextList;
 
     public SlamHand slamHand;
     float holdThreshold = 0.2f;
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         obsession += Time.deltaTime;
+        obsessionBox.text = obsessionTextList[Mathf.FloorToInt(obsession/maxObsession * 3f + 0.5f)];
         slider.value = obsession;
 
         if (isSmoking && !isHoldingA)
@@ -229,10 +234,32 @@ public class Player : MonoBehaviour
     {
         if (table.canPutAnother())
         {
+            if (hand.hasCards())
+            {
+                hand.lastSprite = rightHandHold;
+            }
+            else
+            {
+                hand.lastSprite = rightHandDefault;
+            }
+            hand.SwapSprite(rightHandPoint);
+            hand.Travel(hand.defaultPoint, hand.slamPoint,  450f, 4);
+            
+            hand.slamEnd = true;
             Card card = Deck.instance.takeTopCard();
             table.PutNewCard(card);
             obsession = 0;
+
+            
+            int sum = table.GetSum();
+
+            if (sum == 21)
+            {
+                SumReached();
+            }
         }
+
+
     }
 
     public void Burn()
