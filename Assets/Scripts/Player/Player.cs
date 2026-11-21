@@ -24,26 +24,11 @@ public class Player : MonoBehaviour
                 table.PutNewCard(card);
             }
 
-            Draw();
+            Card card1 = Deck.instance.takeTopCard();
+            table.ThrowCard(card1);
 
             firstFrameTest = false;
         }
-    }
-    public void Draw()
-    {
-        if (!hand.hasCards())
-        {
-            Card card = Deck.instance.takeTopCard();
-            hand.PutCard(card);
-        }
-    }
-    public void DrawCard(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        // Trqbva da se sloji oshte edin condition za tova dali e selectnat draw pile-a sega
-
-        Draw();
     }
 
     public void ChangeSelection(InputAction.CallbackContext context) 
@@ -52,11 +37,26 @@ public class Player : MonoBehaviour
 
         Vector2 value = context.ReadValue<Vector2>();
 
-        int rawValue = Mathf.CeilToInt(value.x);
+        int rawValueX = Mathf.CeilToInt(value.x);
 
-        if (rawValue == 0) rawValue = -1;
+        if (rawValueX == 0) rawValueX = -1;
 
-        table.Select(rawValue);
+        if (playerIndex == 1) rawValueX *= -1;
+
+        int rawValueY = Mathf.CeilToInt(value.y);
+
+        if (rawValueY == 0) rawValueY = -1;
+
+        if (table.TryToSelectThrown(rawValueY))
+        {
+            table.Select(rawValueX);
+        }
+    }
+
+    //starts exactly when the player reaches 21
+    void SumReached() 
+    {
+        table.clearTable();
     }
 
     public void CardInteract(InputAction.CallbackContext context)
@@ -69,14 +69,23 @@ public class Player : MonoBehaviour
         {
             hand.PutCard(tableCard);
         }
+
+        int sum = table.GetSum();
+
+        if(sum == 21) 
+        {
+            SumReached();
+        }
     }
     void OnDisable()
     {
+        InputManager.instance.players[playerIndex].Unsubscribe("ButtonB", Burn);
         InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", CardInteract);
         InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
     }
     void OnEnable()
     {
+        InputManager.instance.players[playerIndex].Subscribe("ButtonB", Burn);
         InputManager.instance.players[playerIndex].Subscribe("ButtonA", CardInteract);
         InputManager.instance.players[playerIndex].Subscribe("Stick", ChangeSelection);
     }
@@ -85,5 +94,15 @@ public class Player : MonoBehaviour
     {
         Card card = Deck.instance.takeTopCard();
         table.PutNewCard(card);
+    }
+
+    public void Burn(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (hand.peekTop() != null) 
+        {
+            hand.takeTopCard();
+        }
     }
 }

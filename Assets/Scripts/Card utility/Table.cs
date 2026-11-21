@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Table : MonoBehaviour
 {
@@ -15,6 +16,13 @@ public class Table : MonoBehaviour
     int numberOfCardsPresnt;
 
     int currentSelected;
+
+    public TMP_Text scoreText;
+
+    public Slot ThrownCardSlot;
+    public GameObject thrownHighlight;
+
+    bool thrownSelected = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,12 +50,15 @@ public class Table : MonoBehaviour
         Debug.Log(Deck.instance);
         highlights[highlights.Length - 1] = Instantiate(highlighterPrefab, Deck.instance.transform).transform.GetChild(0).gameObject;
 
+        ThrownCardSlot.currentCard = null;
+
         highlights[0].SetActive(true);
     }
 
     void PutAtTheEnd() 
     {
         Slot slotToGoBack = allSlots[currentSelected];
+        slotToGoBack.gameObject.SetActive(false);
 
         for (int i = currentSelected; i < allSlots.Length-1; i++)
         {
@@ -96,17 +107,39 @@ public class Table : MonoBehaviour
         return null;
     }
 
+    Card GetThrownCard(Card _card)
+    {
+        if (_card != null) return _card;
+        else
+        {
+            Card card = ThrownCardSlot.takeTopCard();
+            ThrownCardSlot.gameObject.SetActive(false);
+
+            currentSelected = 0;
+            highlights[currentSelected].SetActive(true);
+
+            thrownSelected = false;
+
+            return card;
+        }
+        return null;
+    }
+
     //if _card == null it just takes it
     //if there is no card in the slot, it only puts the card in the current slot
     //returns a null if there is no card to take
     public Card SwapCard(Card _card) 
     {
+        if (thrownSelected) 
+        {
+            return GetThrownCard(_card);
+        }
+
         if (currentSelected >= maximumTableSlots) 
         {
             return DrawCard(_card);
         }
 
-        Debug.Log(allSlots[currentSelected].peekTop());
         Card returnCard = allSlots[currentSelected].takeTopCard();
 
         Debug.Log(_card + " " + returnCard);
@@ -114,7 +147,6 @@ public class Table : MonoBehaviour
         if (_card != null && returnCard != null) 
         {
             allSlots[currentSelected].PutCard(_card);
-            return returnCard;
         }
         else if (returnCard != null && _card == null)
         {
@@ -124,7 +156,9 @@ public class Table : MonoBehaviour
         else if(_card != null && returnCard == null) 
         {
             PutNewCard(_card);
+            return returnCard;
         }
+        CalculatePoints();
 
         return returnCard;
     }
@@ -141,6 +175,7 @@ public class Table : MonoBehaviour
 
         allSlots[numberOfCardsPresnt].PutCard(card);
         numberOfCardsPresnt++;
+        CalculatePoints();
     }
 
     public int size() 
@@ -148,14 +183,74 @@ public class Table : MonoBehaviour
         return numberOfCardsPresnt;
     }
 
+    void CalculatePoints() 
+    {
+        int points = GetSum();
+        scoreText.text = "Score:" + points;
+    }
+
     public int GetSum() 
     {
         int sum = 0;
         for (int i = 0; i < numberOfCardsPresnt; i++)
         {
-            sum += allSlots[numberOfCardsPresnt].peekTop().value;
+            if (allSlots[i].peekTop() == null) continue;
+            sum += allSlots[i].peekTop().value;
         }
 
         return sum;
+    }
+
+    public void clearTable()
+    {
+        for (int i = 0; i < numberOfCardsPresnt; i++)
+        {
+            allSlots[i].takeTopCard();
+            allSlots[i].gameObject.SetActive(false);
+        }
+        CalculatePoints();
+        numberOfCardsPresnt = 0;
+    }
+
+    public void ThrowCard(Card card) 
+    {
+        if (hasThrownCard()) return;
+
+        ThrownCardSlot.gameObject.SetActive(true);
+        ThrownCardSlot.PutCard(card);
+    }
+
+    public bool hasThrownCard() 
+    {
+        return ThrownCardSlot.hasCards();
+    }
+
+    public bool TryToSelectThrown(int y)
+    {
+        if (y == -1)
+        {
+            if (!thrownSelected)
+            {
+                thrownHighlight.SetActive(true);
+                thrownSelected = true;
+
+                highlights[currentSelected].SetActive(false);
+                return false;
+            }
+            return false;
+        }
+        else if (y == 1)
+        {
+            if (thrownSelected)
+            {
+                thrownHighlight.SetActive(false);
+                thrownSelected = false;
+
+                highlights[currentSelected].SetActive(true);
+                return false;
+            }
+            return true;
+        }
+        return true;
     }
 }
