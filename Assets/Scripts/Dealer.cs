@@ -50,7 +50,7 @@ public class Dealer : MonoBehaviour
     {
         float eyeDirecton = (currentPlayerId - 0.5f) * -2;
 
-        eyes.transform.localScale = new Vector3(eyeDirecton * eyes.transform.localScale.x, eyes.transform.localScale.y, eyes.transform.localScale.z);
+        eyes.transform.localScale = new Vector3(eyeDirecton * Mathf.Abs(eyes.transform.localScale.x), eyes.transform.localScale.y, eyes.transform.localScale.z);
     }
     public static void SlamTheTable(int playerID) 
     {
