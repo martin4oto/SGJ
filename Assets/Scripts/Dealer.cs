@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using ArcadesTemplate.Core;
 
 public class Dealer : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Dealer : MonoBehaviour
     public Slider frustrationMeter;
 
     float frustration = 0f;
+    public float score;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -60,7 +62,7 @@ public class Dealer : MonoBehaviour
 
     public static void playerSuspiciousActivity(int playerId) 
     {
-        if (playerId == currentPlayerId)
+        if (playerId == instance.currentPlayerId)
         {
             Lose();
         }
@@ -69,6 +71,7 @@ public class Dealer : MonoBehaviour
     static void Lose() 
     {
         //gotina animaciq na zaguba
+        ArcadeSceneManager.Instance.LoadLoseScreen(Mathf.RoundToInt(instance.score));
     }
 
     void CheckForThrownCard() 

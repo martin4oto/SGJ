@@ -1460,7 +1460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8262807185408406718, guid: bb246982a18fc7c4cbe16101b7de7a3e, type: 3}
       propertyPath: mainSceneName
-      value: GameScene
+      value: DeckTestScene
       objectReference: {fileID: 0}
     - target: {fileID: 8262807185408406718, guid: bb246982a18fc7c4cbe16101b7de7a3e, type: 3}
       propertyPath: exitHintMessage.m_TableEntryReference.m_KeyId
