@@ -14,7 +14,13 @@ public class Player : MonoBehaviour
     public float calmingEffect;
 
     public SlamHand slamHand;
-
+    float holdThreshold = 0.2f;
+    bool isHoldingA;
+    bool pressedA;
+    float pressedATime;
+    bool isHoldingB;
+    bool pressedB;
+    float pressedBTime;
     bool isSmoking = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,6 +59,19 @@ public class Player : MonoBehaviour
 
             firstFrameTest = false;
         }
+
+        if (pressedA && pressedATime + holdThreshold >= Time.time)
+        {
+            isHoldingA = true;
+        }
+        if (pressedB && pressedBTime + holdThreshold >= Time.time)
+        {
+            if (!isHoldingB)
+            {
+                StartSmoking();
+            }
+            isHoldingB = true;
+        }
     }
 
     public void ChangeSelection(InputAction.CallbackContext context)
@@ -82,11 +101,40 @@ public class Player : MonoBehaviour
     {
         table.clearTable();
     }
-
-    public void CardInteract(InputAction.CallbackContext context)
+    void InputA(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (context.performed)
+        {
+            pressedA = true;
+            pressedATime = Time.time;
+        }
 
+        if (context.canceled)
+        {
+            if (!isHoldingA)
+            {
+                CardInteract();
+            }
+            pressedA = false;
+            isHoldingA = false;
+        }
+    }
+    void InputB(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            pressedB = true;
+            pressedBTime = Time.time;
+        }
+
+        if (context.canceled)
+        {
+            pressedB = false;
+            isHoldingB = false;
+        }
+    }
+    public void CardInteract()
+    {
         Card tableCard = table.SwapCard(hand.takeTopCard());
 
         if (tableCard != null)
@@ -103,14 +151,14 @@ public class Player : MonoBehaviour
     }
     void OnDisable()
     {
-        InputManager.instance.players[playerIndex].Unsubscribe("ButtonB", Slam);
-        InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", CardInteract);
+        InputManager.instance.players[playerIndex].Unsubscribe("ButtonB", InputB);
+        InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", InputA);
         InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
     }
     void OnEnable()
     {
-        InputManager.instance.players[playerIndex].Subscribe("ButtonB", Slam);
-        InputManager.instance.players[playerIndex].Subscribe("ButtonA", CardInteract);
+        InputManager.instance.players[playerIndex].Subscribe("ButtonB", InputB);
+        InputManager.instance.players[playerIndex].Subscribe("ButtonA", InputA);
         InputManager.instance.players[playerIndex].Subscribe("Stick", ChangeSelection);
     }
 
@@ -133,12 +181,14 @@ public class Player : MonoBehaviour
 
     public void StartSmoking()
     {
+        if (isSmoking) return;
         isSmoking = true;
         slamHand.StartSmoking();
     }
 
     public void StopSmoking()
     {
+        if (!isSmoking) return;
         isSmoking = false;
         slamHand.StopSmoking();
     }
