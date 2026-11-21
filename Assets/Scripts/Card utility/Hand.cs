@@ -11,14 +11,13 @@ public class Hand : MonoBehaviour, ICardHolder
     float totalTravelTime;
     float timer;
     bool traveling;
-    public Vector3 slamPoint;
-    public Vector3 smokePoint;
+    public Vector3 holdPoint;
     float curveComponent;
-    bool slamEnd;
 
-    void Start() 
+    void Awake()
     {
-        //holdingCard.gameObject.SetActive(false);
+        defaultPoint = transform.localPosition;
+        holdPoint = defaultPoint + new Vector3(-200, 200, 0);
     }
 
     //true if there are cards
@@ -42,6 +41,15 @@ public class Hand : MonoBehaviour, ICardHolder
     {
         if (!holdsCard) return null;
         return holdingCard.peekTop();
+    }
+    public void StartHoldHandUp()
+    {
+        Travel(defaultPoint, holdPoint, 400, 4);
+    }
+
+    public void StopHoldHandUp()
+    {
+        Travel(holdPoint, defaultPoint, 400, 4);
     }
 
     public void PutCard(Card card)
@@ -70,19 +78,10 @@ public class Hand : MonoBehaviour, ICardHolder
             timer -= Time.deltaTime;
             if (timer <= 0) traveling = false;
         }
-        else
-        {
-            if (slamEnd)
-            {
-                slamEnd = false;
-                Travel(slamPoint, defaultPoint, 5000f, 1);
-            }
-        }
     }
 
     public void Travel(Vector3 a, Vector3 b, float pixelsPerSecond, float cc)
     {
-        Debug.Log(pixelsPerSecond);
         pointA = a;
         pointB = b;
         totalTravelTime = Vector3.Distance(pointA, pointB)/pixelsPerSecond;
