@@ -18,6 +18,8 @@ public class Hand : MonoBehaviour, ICardHolder
     public bool slamEnd;
     public Sprite lastSprite;
     float switchTimer;
+    public bool isTextEnabled;
+    public GameObject CardText;
 
     void Awake()
     {
@@ -72,8 +74,31 @@ public class Hand : MonoBehaviour, ICardHolder
         }
         holdingCard.PutCard(card);
     }
-    public void SwapSprite(Sprite newSprite)
+
+    /*
+        Аз не помня, аз не съм видял
+        минаха ли моите години?
+        Ти не ме оставяй да загина,
+        господи, преди да съм живял!
+
+        Изведи ме вън от всяка сложност,
+        научи ме пак на простота:
+        да отдавам сетния петак
+        от сърце на срещнатия просек.
+
+        Да усещам своя радостта
+        на невинното дете, което
+        първите снежинки от небето
+        сбира със отворена уста.
+
+        И без свян да мога да говоря
+        с простите на прост неук език...
+        Научи ме, господи велик,
+        да живея като всички хора.
+     */
+    public void SwapSprite(Sprite newSprite, bool txt)
     {
+        isTextEnabled = txt;
         transform.GetChild(0).GetComponent<Image>().sprite = newSprite;
     }
 
@@ -98,7 +123,8 @@ public class Hand : MonoBehaviour, ICardHolder
                 switchTimer -= Time.deltaTime;
                 if (switchTimer < 0)
                 {
-                    SwapSprite(lastSprite);
+                    CardText.SetActive(isTextEnabled);
+                    SwapSprite(lastSprite, false);
                     Travel(pointPoint, defaultPoint, 150f, 1);
                 }
             }

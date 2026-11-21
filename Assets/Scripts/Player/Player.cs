@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public Player otherPlayer;
     float burnTimer = 0;
     public float maxBurnTimer;
-
+    public GameObject cardText;
     bool firstFrameTest = true;
     void Update()
     {
@@ -189,17 +189,20 @@ public class Player : MonoBehaviour
     }
     public void CardInteract()
     {
-        Dealer.playerSuspiciousActivity(playerIndex);
+        //Dealer.playerSuspiciousActivity(playerIndex);
         Card tableCard = table.SwapCard(hand.takeTopCard());
 
         if (tableCard != null)
         {
             hand.PutCard(tableCard);
-            hand.SwapSprite(rightHandHold);
+            hand.SwapSprite(rightHandHold, false);
+            cardText.SetActive(true);
+            Debug.Log("card taken");
         }
         else
         {
-            hand.SwapSprite(rightHandDefault);
+            hand.SwapSprite(rightHandDefault, false);
+            cardText.SetActive(false);
         }
 
         int sum = table.GetSum();
@@ -230,6 +233,12 @@ public class Player : MonoBehaviour
         Hit();
     }
 
+    bool isTextVisible;
+    public void fixText() 
+    {
+        cardText.SetActive(isTextVisible);
+    }
+
     public void Hit()
     {
         if (table.canPutAnother())
@@ -243,7 +252,9 @@ public class Player : MonoBehaviour
             {
                 hand.lastSprite = rightHandDefault;
             }
-            hand.SwapSprite(rightHandPoint);
+            isTextVisible = cardText.activeSelf;
+            hand.SwapSprite(rightHandPoint, isTextVisible);
+            cardText.SetActive(false);
             hand.Travel(hand.defaultPoint, hand.slamPoint,  450f, 4);
             
             hand.slamEnd = true;
@@ -271,8 +282,9 @@ public class Player : MonoBehaviour
         if (hand.peekTop() != null)
         {
             hand.takeTopCard();
-            hand.SwapSprite(rightHandDefault);
             Dealer.instance.score += 10;
+            hand.SwapSprite(rightHandDefault, false);
+            cardText.SetActive(false);
         }
     }
 
@@ -318,7 +330,9 @@ public class Player : MonoBehaviour
         if (hand.peekTop() != null && otherPlayer.canCatch()) 
         {
             otherPlayer.CatchCard(hand.takeTopCard());
-            hand.SwapSprite(rightHandDefault);
+            hand.SwapSprite(rightHandDefault, false);
+            cardText.SetActive(false);
+
             return true;
         }
         return false;
