@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
         {
             //fire
             burnTimer += Time.deltaTime;
+            Dealer.playerSuspiciousActivity(playerIndex);
 
             if (burnTimer > maxBurnTimer) 
             {
@@ -262,7 +263,7 @@ public class Player : MonoBehaviour
         slamHand.SwapSprite(leftHandDefault);
     }
 
-    bool canCatch() 
+    public bool canCatch() 
     {
         return !table.hasThrownCard();
     }
@@ -270,6 +271,7 @@ public class Player : MonoBehaviour
     void CatchCard(Card card) 
     {
         table.ThrowCard(card);
+        Dealer.playerSuspiciousActivity(playerIndex);
     }
 
     bool ThrowCardToOther() 
