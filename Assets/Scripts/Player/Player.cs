@@ -190,6 +190,7 @@ public class Player : MonoBehaviour
     }
     public void CardInteract()
     {
+        Dealer.playerSuspiciousActivity(playerIndex);
         Card tableCard = table.SwapCard(hand.takeTopCard());
 
         if (tableCard != null)
