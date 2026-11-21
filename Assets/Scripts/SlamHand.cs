@@ -10,7 +10,8 @@ public class SlamHand : MonoBehaviour
     {
     }
 
-    public void Slam() 
+    public void Slam(int PlayerID) 
     {
+        Dealer.SlamTheTable(PlayerID);
     }
 }

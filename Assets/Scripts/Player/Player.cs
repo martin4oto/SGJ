@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     bool firstFrameTest = true;
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
         obsession += Time.deltaTime;
         slider.value = obsession;
 
-        if (isSmoking) 
+        if (isSmoking)
         {
             obsession -= Time.deltaTime * calmingEffect;
         }
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
             obsession = 0;
         }
 
-        if (firstFrameTest) 
+        if (firstFrameTest)
         {
             for (int i = 0; i < 2; i++)
             {
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ChangeSelection(InputAction.CallbackContext context) 
+    public void ChangeSelection(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
 
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     }
 
     //starts exactly when the player reaches 21
-    void SumReached() 
+    void SumReached()
     {
         table.clearTable();
     }
@@ -89,32 +89,32 @@ public class Player : MonoBehaviour
 
         Card tableCard = table.SwapCard(hand.takeTopCard());
 
-        if (tableCard != null) 
+        if (tableCard != null)
         {
             hand.PutCard(tableCard);
         }
 
         int sum = table.GetSum();
 
-        if(sum == 21) 
+        if (sum == 21)
         {
             SumReached();
         }
     }
     void OnDisable()
     {
-        InputManager.instance.players[playerIndex].Unsubscribe("ButtonB", Burn);
+        InputManager.instance.players[playerIndex].Unsubscribe("ButtonB", Slam);
         InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", CardInteract);
         InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
     }
     void OnEnable()
     {
-        InputManager.instance.players[playerIndex].Subscribe("ButtonB", Burn);
+        InputManager.instance.players[playerIndex].Subscribe("ButtonB", Slam);
         InputManager.instance.players[playerIndex].Subscribe("ButtonA", CardInteract);
         InputManager.instance.players[playerIndex].Subscribe("Stick", ChangeSelection);
     }
 
-    public void Hit() 
+    public void Hit()
     {
         Card card = Deck.instance.takeTopCard();
         table.PutNewCard(card);
@@ -125,13 +125,13 @@ public class Player : MonoBehaviour
     {
         if (!context.performed) return;
 
-        if (hand.peekTop() != null) 
+        if (hand.peekTop() != null)
         {
             hand.takeTopCard();
         }
     }
 
-    public void StartSmoking() 
+    public void StartSmoking()
     {
         isSmoking = true;
         slamHand.StartSmoking();
@@ -141,5 +141,12 @@ public class Player : MonoBehaviour
     {
         isSmoking = false;
         slamHand.StopSmoking();
+    }
+
+    public void Slam(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        slamHand.Slam(playerIndex);
     }
 }
