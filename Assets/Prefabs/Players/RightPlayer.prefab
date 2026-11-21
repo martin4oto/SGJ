@@ -1050,7 +1050,7 @@ MonoBehaviour:
   slider: {fileID: 8421440470328071107}
   maxObsession: 15
   calmingEffect: 3
-  slamHand: {fileID: 0}
+  slamHand: {fileID: 1930784722751127635}
 --- !u!1 &6857674551320207545
 GameObject:
   m_ObjectHideFlags: 0

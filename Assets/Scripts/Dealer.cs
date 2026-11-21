@@ -12,7 +12,7 @@ public class Dealer : MonoBehaviour
 
     public Slider frustrationMeter;
 
-    int frustration = 0;
+    float frustration = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -47,7 +47,7 @@ public class Dealer : MonoBehaviour
 
     void Frustrate(float amount) 
     {
-        frustration += frustrationBySlamming;
+        frustration += amount;
 
         if (frustration < 0) frustration = 0;
 
