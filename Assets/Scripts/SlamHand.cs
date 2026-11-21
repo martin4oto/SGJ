@@ -9,4 +9,8 @@ public class SlamHand : MonoBehaviour
     public void StopSmoking() 
     {
     }
+
+    public void Slam() 
+    {
+    }
 }
