@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class Card
 {
     public int value;
@@ -12,6 +13,6 @@ public class Card
 
     public override string ToString() 
     {
-        return value + "";   
+        return "Card: " + value + "";   
     }
 }

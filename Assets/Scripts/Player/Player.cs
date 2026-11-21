@@ -18,7 +18,15 @@ public class Player : MonoBehaviour
     {
         if (firstFrameTest) 
         {
+            for (int i = 0; i < 2; i++)
+            {
+                Card card = Deck.instance.takeTopCard();
+                table.PutNewCard(card);
+            }
+
             Draw();
+
+            firstFrameTest = false;
         }
     }
     public void Draw()
@@ -40,26 +48,37 @@ public class Player : MonoBehaviour
 
     public void ChangeSelection(InputAction.CallbackContext context) 
     {
+        if (!context.performed) return;
+
         Vector2 value = context.ReadValue<Vector2>();
-        table.Select(Mathf.CeilToInt(value.x));
+
+        int rawValue = Mathf.CeilToInt(value.x);
+
+        if (rawValue == 0) rawValue = -1;
+
+        table.Select(rawValue);
     }
 
     public void CardInteract(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
 
+        Card tableCard = table.SwapCard(hand.takeTopCard());
+
+        if (tableCard != null) 
+        {
+            hand.PutCard(tableCard);
+        }
     }
     void OnDisable()
     {
-        InputManager.instance.players[playerIndex].Subscribe("ButtonA", CardInteract);
-        InputManager.instance.players[playerIndex].Subscribe("ButtonA", DrawCard);
-        InputManager.instance.players[playerIndex].Subscribe("Stick", ChangeSelection);
+        InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", CardInteract);
+        InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
     }
     void OnEnable()
     {
-        InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", CardInteract);
-        InputManager.instance.players[playerIndex].Unsubscribe("ButtonA", DrawCard);
-        InputManager.instance.players[playerIndex].Unsubscribe("Stick", ChangeSelection);
+        InputManager.instance.players[playerIndex].Subscribe("ButtonA", CardInteract);
+        InputManager.instance.players[playerIndex].Subscribe("Stick", ChangeSelection);
     }
 
     public void Hit() 

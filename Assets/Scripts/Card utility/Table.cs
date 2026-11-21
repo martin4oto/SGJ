@@ -9,7 +9,7 @@ public class Table : MonoBehaviour
     public Transform tableRow;
     public Transform highlighterRow;
 
-    Slot[] allSlots;
+    public Slot[] allSlots;
     GameObject[] highlights;
 
     int numberOfCardsPresnt;
@@ -23,7 +23,7 @@ public class Table : MonoBehaviour
         numberOfCardsPresnt = 0;
 
         allSlots = new Slot[maximumTableSlots];
-        highlights = new GameObject[maximumTableSlots];
+        highlights = new GameObject[maximumTableSlots + 1];
 
         for (int i = 0; i < maximumTableSlots; i++)
         {
@@ -32,11 +32,15 @@ public class Table : MonoBehaviour
             currentSlot.SetParent(tableRow);
 
             allSlots[i] = currentSlot.GetComponent<Slot>();
+            allSlots[i].currentCard = null;
 
             allSlots[i].gameObject.SetActive(false);
 
-            highlights[i] = Instantiate(highlighterPrefab, highlighterRow);
+            highlights[i] = Instantiate(highlighterPrefab, highlighterRow).transform.GetChild(0).gameObject;
         }
+
+        Debug.Log(Deck.instance);
+        highlights[highlights.Length - 1] = Instantiate(highlighterPrefab, Deck.instance.transform).transform.GetChild(0).gameObject;
 
         highlights[0].SetActive(true);
     }
@@ -68,8 +72,28 @@ public class Table : MonoBehaviour
 
     public void Select(int move)
     {
-        UpdateSelectorObject(move);
         currentSelected += move;
+
+        if (currentSelected< 0 || currentSelected> maximumTableSlots)
+        {
+            currentSelected -= move;
+        }
+        else
+        {
+            currentSelected -= move;
+            UpdateSelectorObject(move);
+            currentSelected += move;
+        }
+    }
+
+    Card DrawCard(Card _card)
+    {
+        if (_card != null) return _card;
+        else 
+        {
+            return Deck.instance.takeTopCard();
+        }
+        return null;
     }
 
     //if _card == null it just takes it
@@ -77,19 +101,27 @@ public class Table : MonoBehaviour
     //returns a null if there is no card to take
     public Card SwapCard(Card _card) 
     {
+        if (currentSelected >= maximumTableSlots) 
+        {
+            return DrawCard(_card);
+        }
+
+        Debug.Log(allSlots[currentSelected].peekTop());
         Card returnCard = allSlots[currentSelected].takeTopCard();
 
-        if (_card != null) 
+        Debug.Log(_card + " " + returnCard);
+
+        if (_card != null && returnCard != null) 
         {
             allSlots[currentSelected].PutCard(_card);
+            return returnCard;
         }
         else if (returnCard != null && _card == null)
         {
             numberOfCardsPresnt--;
             PutAtTheEnd();
         }
-
-        if(_card != null && returnCard == null) 
+        else if(_card != null && returnCard == null) 
         {
             PutNewCard(_card);
         }

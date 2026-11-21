@@ -6,10 +6,14 @@ public class Deck : MonoBehaviour, ICardHolder
     List<Card> allCards;
     public static Deck instance;
 
+    void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        instance = this;
         allCards = new List<Card>();
         GenerateDeck();
         Shuffle();
@@ -59,7 +63,7 @@ public class Deck : MonoBehaviour, ICardHolder
     //returns null if there arent any cards
     public Card takeTopCard() 
     {
-        Debug.Log(allCards + " " + allCards.Count);
+        //Debug.Log(allCards + " " + allCards.Count);
 
         Card card = allCards[allCards.Count - 1];
         allCards.RemoveAt(allCards.Count - 1);

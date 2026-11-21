@@ -83,7 +83,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Inp(InputAction.CallbackContext context)
     {
-        Debug.Log("inp: " + boundToDeviceId + "=" + context.control.device.deviceId + " " + context.action.name);
+        //Debug.Log("inp: " + boundToDeviceId + "=" + context.control.device.deviceId + " " + context.action.name);
     }
 
 }

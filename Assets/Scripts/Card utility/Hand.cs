@@ -2,34 +2,48 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour, ICardHolder
 {
-    Card holdingCard;
+    public Slot holdingCard;
+    bool holdsCard = false;
+
+    void Start() 
+    {
+        holdingCard.gameObject.SetActive(false);
+    }
 
     //true if there are cards
     public bool hasCards() 
     {
-        return holdingCard != null;
+        return holdsCard;
     }
 
     //returns null if there arent any cards
     public Card takeTopCard()
     {
-        Card temp = holdingCard;
-        holdingCard = null;
-        return temp;
+        if (!holdsCard) return null;
+
+        holdsCard = false;
+        holdingCard.gameObject.SetActive(false);
+
+        return holdingCard.takeTopCard();
     }
 
-    public Card peekTop() 
+    public Card peekTop()
     {
-        return holdingCard;
+        if (!holdsCard) return null;
+        return holdingCard.peekTop();
     }
 
-    public void PutCard(Card card) 
+    public void PutCard(Card card)
     {
-        if (card == null) 
+        if (card == null)
         {
             Debug.Log("tried to put a null card in hand");
         }
-
-        holdingCard = card;
+        else 
+        {
+            holdsCard = true;
+            holdingCard.gameObject.SetActive(true);
+        }
+        holdingCard.PutCard(card);
     }
 }

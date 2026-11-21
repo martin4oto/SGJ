@@ -1,9 +1,10 @@
 using UnityEngine;
 using TMPro;
 
+[System.Serializable]
 public class Slot : MonoBehaviour, ICardHolder
 {
-    Card currentCard;
+    public Card currentCard;
     Table table;
 
     public TMP_Text cardNumber1;
@@ -48,24 +49,16 @@ public class Slot : MonoBehaviour, ICardHolder
         cardNumber2.text = currentCard.value + "";
     }
 
-    public void PutCard(Card card) 
+    public void PutCard(Card card)
     {
-        if (currentCard == null)
-        {
-            currentCard = card;
-            card.cardObject = gameObject;
-        }
-        else 
-        {
-            
-        }
+        currentCard = card;
+        Debug.Log("put: " + card);
 
         UpdateVisual();
     }
 
     void Start()
     {
-        currentCard = null;
     }
 
     void Update()
