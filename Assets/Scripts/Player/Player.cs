@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public Sprite rightHandHold;
     public TextMeshProUGUI obsessionBox;
     public List<string> obsessionTextList;
+    public ParticleSystem lowSmoke;
+    public ParticleSystem highSmoke;
 
     public SlamHand slamHand;
     float holdThreshold = 0.2f;
@@ -30,21 +32,13 @@ public class Player : MonoBehaviour
     bool pressedB;
     float pressedBTime;
     bool isSmoking = false;
+    float timeOfLastStickMove;
+    float stickDelay = 0.2f;
 
     public Player otherPlayer;
-
-
     float burnTimer = 0;
     public float maxBurnTimer;
-
     public GameObject cardText;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
     bool firstFrameTest = true;
     void Update()
     {
@@ -115,12 +109,15 @@ public class Player : MonoBehaviour
 
     public void ChangeSelection(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        //Debug.Log(context.performed.ToString() + timeOfLastStickMove + " " + (Time.time - stickDelay) + "r?: " + (timeOfLastStickMove < Time.time - stickDelay));
+        if (!context.performed || timeOfLastStickMove > Time.time - stickDelay) return;
 
         Vector2 value = context.ReadValue<Vector2>();
 
-        int rawValueX = Mathf.CeilToInt(value.x);
+        timeOfLastStickMove = Time.time;
 
+        int rawValueX = Mathf.CeilToInt(value.x);
+        
         if (rawValueX == 0) rawValueX = -1;
 
         if (playerIndex == 1) rawValueX *= -1;
@@ -273,8 +270,11 @@ public class Player : MonoBehaviour
                 SumReached();
             }
         }
-
-
+        else
+        {
+            int pId = playerIndex == 0 ? 1 : 2;
+            EndScreen.TriggerEndScreen("Player " + pId + " couldn't hit as their table was full...");
+        }
     }
 
     public void Burn()
@@ -282,6 +282,7 @@ public class Player : MonoBehaviour
         if (hand.peekTop() != null)
         {
             hand.takeTopCard();
+            Dealer.instance.score += 10;
             hand.SwapSprite(rightHandDefault, false);
             cardText.SetActive(false);
         }
@@ -293,6 +294,8 @@ public class Player : MonoBehaviour
         isSmoking = true;
         slamHand.StartSmoking();
         slamHand.SwapSprite(leftHandSmoke);
+        lowSmoke.Stop();
+        highSmoke.Play();
     }
 
     public void StopSmoking()
@@ -301,6 +304,8 @@ public class Player : MonoBehaviour
         isSmoking = false;
         slamHand.StopSmoking();
         slamHand.SwapSprite(leftHandDefault);
+        lowSmoke.Play();
+        highSmoke.Stop();
     }
 
     public void Slam()

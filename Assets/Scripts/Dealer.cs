@@ -5,25 +5,17 @@ using TMPro;
 
 public class Dealer : MonoBehaviour
 {
-    public static int frustrationBySlamming = 10;
     public static Dealer instance;
-
     public Player[] players;
     public int currentPlayerId;
-    public float frustrationDecay;
-
-    public Slider frustrationMeter;
     public TextMeshProUGUI scoreText;
     public Image warningL;
     public Image warningR;
-
+    public GameObject visionCone;
     public Transform eyes;
     int lookDir;
-
-    float frustration = 0f;
     public float score;
     float attention;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -37,14 +29,12 @@ public class Dealer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        scoreText.text = score + "$";
+        if (!EndScreen.instance.gameEnd) scoreText.text = Mathf.RoundToInt(score) + "$";
         attention += 1/maxTimerToStop * Time.deltaTime;
-
-        if (frustration > 0) 
-        {
-            Frustrate(-Time.deltaTime * frustrationDecay);
-        }
         scoreText.color = Color.HSVToRGB(Time.time/5%1, 1, 1);
+
+        score -= Time.deltaTime;
+        if (score < 0) score = 0;
 
         if (attention >= 1)
         {
@@ -70,6 +60,7 @@ public class Dealer : MonoBehaviour
         lookDir = Mathf.RoundToInt((currentPlayerId - 0.5f) * -2);
 
         eyes.transform.localScale = new Vector3(lookDir * Mathf.Abs(eyes.transform.localScale.x), eyes.transform.localScale.y, eyes.transform.localScale.z);
+        visionCone.transform.localScale = new Vector3(lookDir * Mathf.Abs(visionCone.transform.localScale.x), visionCone.transform.localScale.y, visionCone.transform.localScale.z);
     
         if (lookDir == 1)
         {
@@ -85,7 +76,6 @@ public class Dealer : MonoBehaviour
     }
     public static void SlamTheTable(int playerID) 
     {
-        instance.Frustrate(frustrationBySlamming);
         if (playerID == 0 && instance.lookDir == 1){
             instance.attention -= 0.1f;
         }else if (playerID == 0 && instance.lookDir == -1){
@@ -117,15 +107,6 @@ public class Dealer : MonoBehaviour
         attention = 0;
     }
 
-    void Frustrate(float amount) 
-    {
-        frustration += amount;
-
-        if (frustration < 0) frustration = 0;
-
-        frustrationMeter.value = frustration;
-    }
-
     public static void playerSuspiciousActivity(int playerId) 
     {
         if (playerId == instance.currentPlayerId)
@@ -136,8 +117,8 @@ public class Dealer : MonoBehaviour
 
     static void Lose() 
     {
-        //gotina animaciq na zaguba
-        ArcadeSceneManager.Instance.LoadLoseScreen(Mathf.RoundToInt(instance.score));
+        int pId = instance.lookDir == -1 ? 2 : 1;
+        EndScreen.TriggerEndScreen("The Dealer saw Player " + pId + " cheat...");
     }
 
     void CheckForThrownCard() 
