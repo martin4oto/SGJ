@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Localization;
 using UnityEngine.InputSystem;
 
+
 namespace ArcadesTemplate.Core
 {
     public enum ResultScreenType
