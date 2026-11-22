@@ -13,19 +13,28 @@ public class SlamHand : MonoBehaviour
     public Vector3 smokePoint;
     float curveComponent;
     bool slamEnd;
+
+    public AudioSource smoker;
+
     void Awake()
     {
         defaultPoint = transform.localPosition;
         slamPoint = defaultPoint + new Vector3(0, 150, 0);
         smokePoint = defaultPoint + new Vector3(200, 200, 0);
     }
+
+
+    bool smoking = false;
     public void StartSmoking()
     {
+        smoking = true;
         Travel(defaultPoint, smokePoint, 400, 4);
     }
 
     public void StopSmoking()
     {
+        smoker.Stop();
+        smoking = false;
         Travel(smokePoint, defaultPoint, 400, 4);
     }
 
@@ -66,6 +75,11 @@ public class SlamHand : MonoBehaviour
             {
                 if (DoneOnce)
                 {
+                    if (smoking) 
+                    {
+                        smoker.Play();
+                    }
+
                     if (soundBuffer) 
                     {
                         SlamSound();
