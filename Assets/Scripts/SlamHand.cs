@@ -30,9 +30,21 @@ public class SlamHand : MonoBehaviour
         Travel(smokePoint, defaultPoint, 400, 4);
     }
 
+    void SlamSound() 
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
     public void Slam(int PlayerID) 
     {
         Dealer.SlamTheTable(PlayerID);
+
+        if (soundBuffer) 
+        {
+            SlamSound();
+        }
+
+        soundBuffer = true;
         Travel(defaultPoint, slamPoint, 450, 4);
         slamEnd = true;
         tableShake.Play(0.4f);
@@ -43,13 +55,28 @@ public class SlamHand : MonoBehaviour
         GetComponent<Image>().sprite = newSprite;
     }
 
+    bool DoneOnce = false;
+    bool soundBuffer = false;
+
     void Update()
     {
         if (traveling)
         {
             transform.localPosition = Vector3.Lerp(pointA, pointB, 1 - Mathf.Pow(timer/totalTravelTime, curveComponent));
             timer -= Time.deltaTime;
-            if (timer <= 0) traveling = false;
+            if (timer <= 0)
+            {
+                if (DoneOnce)
+                {
+                    if (soundBuffer) 
+                    {
+                        SlamSound();
+                        soundBuffer = false;
+                    }
+                }
+                DoneOnce = true;
+                traveling = false;
+            }
         }
         else
         {

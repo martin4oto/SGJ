@@ -30,6 +30,7 @@ public class Slot : MonoBehaviour, ICardHolder
     {
         Card temporary = currentCard;
         currentCard = null;
+        CardSound();
 
         return temporary;
     }
@@ -51,6 +52,7 @@ public class Slot : MonoBehaviour, ICardHolder
 
     public void PutCard(Card card)
     {
+        CardSound();
         currentCard = card;
         Debug.Log("put: " + card);
 
@@ -69,5 +71,11 @@ public class Slot : MonoBehaviour, ICardHolder
     public void PutOnTable(Table _table)
     {
         table = _table;
+    }
+
+
+    void CardSound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 }
