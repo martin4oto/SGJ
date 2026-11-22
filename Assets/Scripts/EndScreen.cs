@@ -13,7 +13,7 @@ public class EndScreen : MonoBehaviour
     public TextMeshProUGUI reasonBox;
     public ParticleSystem chipDrain;
     public int finalScore;
-    int displayScore;
+    float displayScore;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -24,8 +24,9 @@ public class EndScreen : MonoBehaviour
     {
         if (!gameEnd) return;
 
-        Dealer.instance.scoreText.text = displayScore + "$";
-        displayScore -= Mathf.RoundToInt(Time.deltaTime * finalScore/5);
+        Dealer.instance.scoreText.text = Mathf.RoundToInt(displayScore) + "$";
+        displayScore -= Time.deltaTime * finalScore/5f;
+        if (displayScore < 0) displayScore = 0;
 
 
         if (moveTimer > 0)

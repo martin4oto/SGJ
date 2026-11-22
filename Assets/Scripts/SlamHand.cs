@@ -16,6 +16,8 @@ public class SlamHand : MonoBehaviour
 
     public AudioSource smoker;
 
+    public AnimationShake tableShake;
+	
     void Awake()
     {
         defaultPoint = transform.localPosition;
@@ -55,6 +57,7 @@ public class SlamHand : MonoBehaviour
         soundBuffer = true;
         Travel(defaultPoint, slamPoint, 450, 4);
         slamEnd = true;
+        tableShake.Play(0.4f);
     }
 
     public void SwapSprite(Sprite newSprite)

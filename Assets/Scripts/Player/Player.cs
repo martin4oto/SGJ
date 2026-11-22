@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public List<string> obsessionTextList;
     public ParticleSystem lowSmoke;
     public ParticleSystem highSmoke;
+    public ParticleSystem firePart;
 
     public SlamHand slamHand;
     float holdThreshold = 0.2f;
@@ -42,7 +43,10 @@ public class Player : MonoBehaviour
     bool firstFrameTest = true;
     void Update()
     {
-        obsession += Time.deltaTime;
+        float modif = 1; 
+        if (Dealer.LookingAtId() == playerIndex) modif = 1.5f;
+
+        obsession += Time.deltaTime * modif;
         obsessionBox.text = obsessionTextList[Mathf.FloorToInt(obsession/maxObsession * 3f + 0.5f)];
         slider.value = obsession;
 
@@ -75,8 +79,9 @@ public class Player : MonoBehaviour
         if (isHoldingA && isHoldingB && hand.hasCards())
         {
             //fire
+            if (!firePart.isPlaying) firePart.Play();
             burnTimer += Time.deltaTime;
-            Dealer.playerSuspiciousActivity(playerIndex);
+            Dealer.playerSuspiciousActivity(playerIndex, " burning a card...");
 
             if (burnTimer > maxBurnTimer) 
             {
@@ -87,6 +92,7 @@ public class Player : MonoBehaviour
         else
         {
             burnTimer = 0;
+            if (firePart.isPlaying) firePart.Stop();
         }
 
         if (pressedA && pressedATime <= Time.time - holdThreshold)
@@ -189,7 +195,7 @@ public class Player : MonoBehaviour
     }
     public void CardInteract()
     {
-        //Dealer.playerSuspiciousActivity(playerIndex);
+        Dealer.playerSuspiciousActivity(playerIndex, " moving cards around...");
         Card tableCard = table.SwapCard(hand.takeTopCard());
 
         if (tableCard != null)
@@ -197,7 +203,6 @@ public class Player : MonoBehaviour
             hand.PutCard(tableCard);
             hand.SwapSprite(rightHandHold, false);
             cardText.SetActive(true);
-            Debug.Log("card taken");
         }
         else
         {
@@ -322,7 +327,7 @@ public class Player : MonoBehaviour
     void CatchCard(Card card) 
     {
         table.ThrowCard(card);
-        Dealer.playerSuspiciousActivity(playerIndex);
+        Dealer.playerSuspiciousActivity(playerIndex, " had a card thrown to him...");
     }
 
     bool ThrowCardToOther() 

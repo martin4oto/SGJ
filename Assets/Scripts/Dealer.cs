@@ -74,6 +74,10 @@ public class Dealer : MonoBehaviour
         }
     
     }
+    public static int LookingAtId()
+    {
+        return instance.lookDir == -1 ? 1 : 0;
+    }
     public static void SlamTheTable(int playerID) 
     {
         if (playerID == 0 && instance.lookDir == 1){
@@ -107,25 +111,25 @@ public class Dealer : MonoBehaviour
         attention = 0;
     }
 
-    public static void playerSuspiciousActivity(int playerId) 
+    public static void playerSuspiciousActivity(int playerId, string reason) 
     {
         if (playerId == instance.currentPlayerId)
         {
-            Lose();
+            Lose(reason);
         }
     }
 
-    static void Lose() 
+    static void Lose(string reason) 
     {
         int pId = instance.lookDir == -1 ? 2 : 1;
-        EndScreen.TriggerEndScreen("The Dealer saw Player " + pId + " cheat...");
+        EndScreen.TriggerEndScreen("The Dealer saw Player " + pId + reason);
     }
 
     void CheckForThrownCard() 
     {
         if (!players[currentPlayerId].canCatch())
         {
-            Lose();
+            Lose(" had a suspicious card next to him...");
         }
     }
 }
