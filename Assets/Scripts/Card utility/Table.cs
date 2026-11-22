@@ -77,14 +77,9 @@ public class Table : MonoBehaviour
         highlights[currentSelected].SetActive(false);
         highlights[currentSelected + move].SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void Select(int move)
     {
+        Debug.Log(currentSelected + move);
         currentSelected += move;
 
         if (currentSelected< 0 || currentSelected> maximumTableSlots)

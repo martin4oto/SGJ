@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     List<UnsubscribeTicket> unsubscribeList = new();
     PlayerInput playerInput;
     public int boundToDeviceId;
+    bool autoSwitch = true;
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -24,13 +25,13 @@ public class PlayerInputHandler : MonoBehaviour
     }
     void Start()
     {
-        Debug.Log(boundToDeviceId);
-        playerInput.SwitchCurrentControlScheme("Default", InputSystem.GetDeviceById(boundToDeviceId));
+        if (autoSwitch) playerInput.SwitchCurrentControlScheme("Default", InputSystem.GetDeviceById(boundToDeviceId));
+    }
 
-        Subscribe("ButtonA", Inp);
-        Subscribe("ButtonB", Inp);
-        Subscribe("ButtonC", Inp);
-        Subscribe("Stick" , Inp);
+    public void ChangeControlScheme(string newScheme)
+    {
+        autoSwitch = false;
+        playerInput.SwitchCurrentControlScheme(newScheme, InputSystem.GetDeviceById(boundToDeviceId));
     }
 
     public void Subscribe(string action, Action<InputAction.CallbackContext> func)
@@ -80,10 +81,4 @@ public class PlayerInputHandler : MonoBehaviour
             func = _func;
         }
     }
-
-    void Inp(InputAction.CallbackContext context)
-    {
-        //Debug.Log("inp: " + boundToDeviceId + "=" + context.control.device.deviceId + " " + context.action.name);
-    }
-
 }

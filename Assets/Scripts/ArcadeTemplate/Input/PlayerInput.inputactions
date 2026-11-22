@@ -65,7 +65,7 @@
                 {
                     "name": "",
                     "id": "d922bf96-7860-4c4a-804a-130dd8d54238",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard;Default",
@@ -97,8 +97,19 @@
                 },
                 {
                     "name": "",
+                    "id": "17573a06-f7ad-4881-b962-41884e321b17",
+                    "path": "<Keyboard>/numpad4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
+                    "action": "ButtonA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8224cb95-d99d-43b1-890f-7faeeb37369c",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard;Default",
@@ -124,6 +135,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Joystick;Default",
+                    "action": "ButtonB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ed45e7e-c944-4d70-a8d6-9da0e5ff3917",
+                    "path": "<Keyboard>/numpad5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
                     "action": "ButtonB",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -162,6 +184,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "9c7004be-0c82-4324-93ac-c53411bf3994",
+                    "path": "<Keyboard>/numpad6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
+                    "action": "ButtonC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector",
                     "id": "313578ea-8859-48b5-8623-7d71568b75ba",
                     "path": "2DVector",
@@ -178,7 +211,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": ";Keyboard;Default",
                     "action": "Stick",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -189,7 +222,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": ";Keyboard;Default",
                     "action": "Stick",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -200,7 +233,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": ";Keyboard;Default",
                     "action": "Stick",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -211,7 +244,62 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": ";Keyboard;Default",
+                    "action": "Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "62a3821c-f686-4c4d-9d4d-ad2a4acd9f92",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stick",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "4b39802b-80cb-4d68-b58c-051c36a9c6b6",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
+                    "action": "Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "ae0d18c2-bae9-44c1-bdf0-662f6a107fcd",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
+                    "action": "Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "ad406d66-4615-4f89-97e2-f1f7a13461bb",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
+                    "action": "Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "72136feb-b0bd-4ffe-9437-d25e0b09c4de",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;Default",
                     "action": "Stick",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -377,6 +465,17 @@
                     "isOptional": false,
                     "isOR": false
                 },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KeyboardRight",
+            "bindingGroup": "KeyboardRight",
+            "devices": [
                 {
                     "devicePath": "<Keyboard>",
                     "isOptional": false,

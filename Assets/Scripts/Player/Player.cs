@@ -120,9 +120,7 @@ public class Player : MonoBehaviour
 
         timeOfLastStickMove = Time.time;
 
-        int rawValueX = Mathf.CeilToInt(value.x);
-        
-        if (rawValueX == 0) rawValueX = -1;
+        int rawValueX = (int)(Mathf.Sign(value.x) * Mathf.Ceil(Mathf.Abs(value.x)));
 
         if (playerIndex == 1) rawValueX *= -1;
         Debug.Log("throw test: " + rawValueX);
@@ -136,9 +134,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        int rawValueY = Mathf.CeilToInt(value.y);
-
-        if (rawValueY == 0) rawValueY = -1;
+        int rawValueY = (int)(Mathf.Sign(value.y) * Mathf.Ceil(Mathf.Abs(value.y)));
 
         if (table.TryToSelectThrown(rawValueY))
         {
