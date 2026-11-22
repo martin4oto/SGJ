@@ -306,12 +306,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 1994740118498334831, guid: f959c4156e554e440af24537c516aed7, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.53400004
+      objectReference: {fileID: 0}
     - target: {fileID: 3857154817823901285, guid: f959c4156e554e440af24537c516aed7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3857154817823901285, guid: f959c4156e554e440af24537c516aed7, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134647945501667030, guid: f959c4156e554e440af24537c516aed7, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6545978698691517828, guid: f959c4156e554e440af24537c516aed7, type: 3}
@@ -333,6 +341,10 @@ PrefabInstance:
     - target: {fileID: 7323650150763218238, guid: f959c4156e554e440af24537c516aed7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342387887944965495, guid: f959c4156e554e440af24537c516aed7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 8541807987163219533, guid: f959c4156e554e440af24537c516aed7, type: 3}
       propertyPath: scorePart
@@ -1233,6 +1245,14 @@ PrefabInstance:
     - target: {fileID: 6110831026893343265, guid: 2966b153c4f320541aa55640c81faaf0, type: 3}
       propertyPath: m_Name
       value: RightPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322954887874299754, guid: 2966b153c4f320541aa55640c81faaf0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322954887874299754, guid: 2966b153c4f320541aa55640c81faaf0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7963470193907631961, guid: 2966b153c4f320541aa55640c81faaf0, type: 3}
       propertyPath: scorePart
