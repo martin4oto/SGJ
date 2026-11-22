@@ -18,8 +18,6 @@ public class Player : MonoBehaviour
     public Sprite rightHandDefault;
     public Sprite rightHandPoint;
     public Sprite rightHandHold;
-    public TextMeshProUGUI obsessionBox;
-    public List<string> obsessionTextList;
     public ParticleSystem lowSmoke;
     public ParticleSystem highSmoke;
     public ParticleSystem firePart;
@@ -47,7 +45,6 @@ public class Player : MonoBehaviour
         if (Dealer.LookingAtId() == playerIndex) modif = 1.5f;
 
         obsession += Time.deltaTime * modif;
-        obsessionBox.text = obsessionTextList[Mathf.FloorToInt(obsession/maxObsession * 3f + 0.5f)];
         slider.value = obsession;
 
         if (isSmoking && !isHoldingA)
