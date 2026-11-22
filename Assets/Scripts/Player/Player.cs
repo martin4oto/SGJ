@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
     //starts exactly when the player reaches 21
     void SumReached()
     {
+        GetComponent<AudioSource>().Play();
         blackJackCounter++;
         numberOfBlackjacks++;
 
@@ -184,6 +185,7 @@ public class Player : MonoBehaviour
                 ObsessionBarFix();
                 break;
         }
+
 
 
         blackjackCounterObject.text = "HANDS WON:" + blackJackCounter;
