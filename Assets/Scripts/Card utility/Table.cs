@@ -22,6 +22,7 @@ public class Table : MonoBehaviour
 
     public Slot ThrownCardSlot;
     public GameObject thrownHighlight;
+    public ParticleSystem scorePart;
 
     bool thrownSelected = false;
 
@@ -181,7 +182,7 @@ public class Table : MonoBehaviour
     void CalculatePoints() 
     {
         int points = GetSum();
-        scoreText.text = "Score:" + points;
+        scoreText.text = points + "/" + 21;
     }
 
     public int GetSum() 
@@ -207,6 +208,7 @@ public class Table : MonoBehaviour
         CalculatePoints();
         numberOfCardsPresnt = 0;
         Dealer.instance.ChangeId(playerIndex);
+        scorePart.Play();
     }
 
     public void ThrowCard(Card card) 

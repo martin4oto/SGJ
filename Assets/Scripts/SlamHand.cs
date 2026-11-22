@@ -13,6 +13,7 @@ public class SlamHand : MonoBehaviour
     public Vector3 smokePoint;
     float curveComponent;
     bool slamEnd;
+    public AnimationShake tableShake;
     void Awake()
     {
         defaultPoint = transform.localPosition;
@@ -34,6 +35,7 @@ public class SlamHand : MonoBehaviour
         Dealer.SlamTheTable(PlayerID);
         Travel(defaultPoint, slamPoint, 450, 4);
         slamEnd = true;
+        tableShake.Play(0.4f);
     }
 
     public void SwapSprite(Sprite newSprite)

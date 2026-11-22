@@ -85,7 +85,7 @@ MonoBehaviour:
     cardObject: {fileID: 4665591210943924862}
   cardNumber1: {fileID: 6400659068614188713}
   cardNumber2: {fileID: 1955668303877586560}
-  highighter: {fileID: 0}
+  highighter: {fileID: 2879997208176544996}
 --- !u!1 &468120086824189704
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +449,7 @@ MonoBehaviour:
   scoreText: {fileID: 8555879440628002197}
   ThrownCardSlot: {fileID: 3794424853692379059}
   thrownHighlight: {fileID: 3457989309533857394}
+  scorePart: {fileID: 0}
 --- !u!1 &3240640961651034920
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 1.25, y: 0}
+  m_AnchoredPosition: {x: -1.25, y: 0}
   m_SizeDelta: {x: -66.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7726410615816585110
@@ -899,6 +900,81 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 1
+--- !u!1 &6072293087503147166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6885652929281835398}
+  - component: {fileID: 8949314172377001307}
+  - component: {fileID: 3046682830453439963}
+  m_Layer: 5
+  m_Name: tableLegs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6885652929281835398
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072293087503147166}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1034280653325028513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -250}
+  m_SizeDelta: {x: 600, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8949314172377001307
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072293087503147166}
+  m_CullTransparentMesh: 1
+--- !u!114 &3046682830453439963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072293087503147166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 76b1d94326401304082727ad1929a6c2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6110831026893343265
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +986,7 @@ GameObject:
   - component: {fileID: 1034280653325028513}
   - component: {fileID: 2258069502008799030}
   - component: {fileID: 5433119524947564261}
+  - component: {fileID: 8538927470950287882}
   m_Layer: 5
   m_Name: RightPlayer
   m_TagString: Untagged
@@ -929,6 +1006,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6885652929281835398}
   - {fileID: 3153138852641142096}
   - {fileID: 5363231725264976704}
   - {fileID: 1743151208718582620}
@@ -981,10 +1059,27 @@ MonoBehaviour:
   - I NEED TO HIT
   lowSmoke: {fileID: 0}
   highSmoke: {fileID: 0}
+  firePart: {fileID: 0}
   slamHand: {fileID: 1930784722751127635}
   otherPlayer: {fileID: 0}
   maxBurnTimer: 2
   cardText: {fileID: 1399434258387619357}
+--- !u!114 &8538927470950287882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110831026893343265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361efec252b55e941aa88fbff38c6622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  duration: 0.15
+  strenght: 5
+  delay: 0
+  localSpace: 1
 --- !u!1 &6553095356645988988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,6 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlamHand
   slamPoint: {x: 0, y: 0, z: 0}
   smokePoint: {x: 0, y: 0, z: 0}
+  tableShake: {fileID: 8538927470950287882}
 --- !u!1 &7222147529390215225
 GameObject:
   m_ObjectHideFlags: 0
