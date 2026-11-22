@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
 
             //Card card1 = Deck.instance.takeTopCard();
             //table.ThrowCard(card1);
+            ObsessionBarFix();
 
             firstFrameTest = false;
         }
@@ -127,9 +128,11 @@ public class Player : MonoBehaviour
         if (rawValueX == 0) rawValueX = -1;
 
         if (playerIndex == 1) rawValueX *= -1;
+        Debug.Log("throw test: " + rawValueX);
 
-        if (isHoldingA && rawValueX == 1) 
+        if (isHoldingA && rawValueX != 0) 
         {
+            Debug.Log("throw test yes");
             if (ThrowCardToOther())
             {
                 return;
@@ -146,9 +149,44 @@ public class Player : MonoBehaviour
         }
     }
 
+    int blackJackCounter = 0;
+    public TMP_Text blackjackCounterObject;
+    static int numberOfBlackjacks = 0;
     //starts exactly when the player reaches 21
     void SumReached()
     {
+        blackJackCounter++;
+        numberOfBlackjacks++;
+
+        switch (numberOfBlackjacks)
+        {
+            case 4:
+                maxObsession = 30;
+                ObsessionBarFix();
+                break;
+            case 6:
+                calmingEffect = 1.25f;
+                break;
+            case 8:
+                maxObsession = 20;
+                ObsessionBarFix();
+                break;
+            case 10:
+                calmingEffect = 0.75f;
+                break;
+            case 12:
+                maxObsession = 15;
+                ObsessionBarFix();
+                break;
+            case 18:
+                maxObsession = 7;
+                calmingEffect = 0.5f;
+                ObsessionBarFix();
+                break;
+        }
+
+
+        blackjackCounterObject.text = "HANDS WON:" + blackJackCounter;
         table.clearTable();
     }
     void InputA(InputAction.CallbackContext context)
@@ -341,5 +379,10 @@ public class Player : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    void ObsessionBarFix() 
+    {
+        slider.maxValue = maxObsession;
     }
 }
