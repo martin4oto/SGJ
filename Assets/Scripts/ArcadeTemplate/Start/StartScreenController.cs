@@ -9,6 +9,8 @@ public class StartScreenController : MonoBehaviour
     [Header("Optional")]
     [Tooltip("Minimum time before input is accepted (seconds).")]
     public float inputDelay = 0.5f;
+    public GameObject p1R;
+    public GameObject p2R;
     bool p1;
     bool p2;
     bool starting;
@@ -21,10 +23,12 @@ public class StartScreenController : MonoBehaviour
     void P1Ready(InputAction.CallbackContext context)
     {
         p1 = true;
+        p1R.SetActive(true);
     }
     void P2Ready(InputAction.CallbackContext context)
     {
         p2 = true;
+        p2R.SetActive(true);
     }
     void OnEnable()
     {
