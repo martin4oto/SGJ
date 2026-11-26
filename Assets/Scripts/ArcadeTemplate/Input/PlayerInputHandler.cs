@@ -9,8 +9,6 @@ public class PlayerInputHandler : MonoBehaviour
     Dictionary<string, List<Action<InputAction.CallbackContext>>> actionFunctionPairsButtons = new();
     List<UnsubscribeTicket> unsubscribeList = new();
     PlayerInput playerInput;
-    public int boundToDeviceId;
-    bool autoSwitch = true;
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -22,16 +20,13 @@ public class PlayerInputHandler : MonoBehaviour
         actionFunctionPairsButtons.Add("Stick", new ());
         actionFunctionPairsButtons.Add("Start", new ());
         actionFunctionPairsButtons.Add("Exit", new ());
-    }
-    void Start()
-    {
-        if (autoSwitch) playerInput.SwitchCurrentControlScheme("Default", InputSystem.GetDeviceById(boundToDeviceId));
-    }
+        actionFunctionPairsButtons.Add("NumpadJoin", new ());
 
-    public void ChangeControlScheme(string newScheme)
-    {
-        autoSwitch = false;
-        playerInput.SwitchCurrentControlScheme(newScheme, InputSystem.GetDeviceById(boundToDeviceId));
+        Subscribe("NumpadJoin" , HandleConnectViaNumpad);
+
+        transform.SetParent(InputManager.instance.transform);
+
+        InputManager.instance.players.Add(this);
     }
 
     public void Subscribe(string action, Action<InputAction.CallbackContext> func)
@@ -60,8 +55,11 @@ public class PlayerInputHandler : MonoBehaviour
         {
             func?.Invoke(context);
         }
-
-        
+    }
+    void HandleConnectViaNumpad(InputAction.CallbackContext context)
+    {
+        if (InputManager.instance.players.Count != 1) return;
+        InputManager.instance.ConnectViaNumpad();
     }
     void OnDisable()
     {

@@ -39,8 +39,11 @@ public class Player : MonoBehaviour
     public float maxBurnTimer;
     public GameObject cardText;
     bool firstFrameTest = true;
+    float initialDropInputTime = 0.25f;
     void Update()
     {
+        if (initialDropInputTime > 0) initialDropInputTime -= Time.deltaTime;
+
         float modif = 1; 
         if (Dealer.LookingAtId() == playerIndex) modif = 1.5f;
 
@@ -114,7 +117,7 @@ public class Player : MonoBehaviour
     public void ChangeSelection(InputAction.CallbackContext context)
     {
         //Debug.Log(context.performed.ToString() + timeOfLastStickMove + " " + (Time.time - stickDelay) + "r?: " + (timeOfLastStickMove < Time.time - stickDelay));
-        if (!context.performed || timeOfLastStickMove > Time.time - stickDelay) return;
+        if (!context.performed || timeOfLastStickMove > Time.time - stickDelay || initialDropInputTime > 0) return;
 
         Vector2 value = context.ReadValue<Vector2>();
 
@@ -186,6 +189,8 @@ public class Player : MonoBehaviour
     }
     void InputA(InputAction.CallbackContext context)
     {
+        if (initialDropInputTime > 0) return;
+
         if (context.performed)
         {
             pressedA = true;
@@ -208,6 +213,8 @@ public class Player : MonoBehaviour
     }
     void InputB(InputAction.CallbackContext context)
     {
+        if (initialDropInputTime > 0) return;
+        
         if (context.performed)
         {
             pressedB = true;
@@ -267,7 +274,7 @@ public class Player : MonoBehaviour
 
     public void Hit(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || initialDropInputTime > 0) return;
         Hit();
     }
 

@@ -149,12 +149,6 @@ MonoBehaviour:
   rightHandDefault: {fileID: 21300000, guid: 717ca841711146f45b3712b71d381917, type: 3}
   rightHandPoint: {fileID: 21300000, guid: 9563b13f21adfb2498a0d7a380ae1b53, type: 3}
   rightHandHold: {fileID: 21300000, guid: fb8836196e5ebfe47b5b0c6510328a04, type: 3}
-  obsessionBox: {fileID: 0}
-  obsessionTextList:
-  - I want to gamble
-  - I want to hit
-  - GAMBLE GAMBLE GAMBLE
-  - I NEED TO HIT
   lowSmoke: {fileID: 0}
   highSmoke: {fileID: 0}
   firePart: {fileID: 0}
@@ -431,7 +425,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -568,7 +562,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

@@ -28,6 +28,7 @@ namespace ArcadesTemplate.Core
         [SerializeField] private string winSceneName = "WinScene";
         [SerializeField] private string loseSceneName = "LoseScene";
         [SerializeField] private string nameEntrySceneName = "NameEntryScene";
+        bool connectedInput;
 
         [Header("Exit")]
         [SerializeField] private float exitDoublePressWindow = 3f;
@@ -48,6 +49,7 @@ namespace ArcadesTemplate.Core
         private float _lastExitPressTime = -999f;
         private bool _exitArmed = false;
         bool isLoading;
+        bool numpad;
 
         private void Awake()
         {
@@ -185,10 +187,17 @@ namespace ArcadesTemplate.Core
         {
             Application.Quit();
         }
+        void Update()
+        {
+            if (!connectedInput && InputManager.instance.players.Count > 0){
+                InputManager.instance.players[0].Subscribe("Exit", HandleExitInput);
+                connectedInput = true;
+            }
+        }
 
         void OnEnable()
         {
-            InputManager.instance.players[0].Subscribe("Exit", HandleExitInput);
+            
             SceneManager.sceneLoaded += SceneLoaded;
         }
         void OnDisable()

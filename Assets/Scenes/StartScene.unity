@@ -510,6 +510,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7016613098406008687, guid: 7b228d1ef7dcbef4fa086182d99cd56a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1658711619}
+    - targetCorrespondingSourceObject: {fileID: 7016613098406008687, guid: 7b228d1ef7dcbef4fa086182d99cd56a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1658711620}
   m_SourcePrefab: {fileID: 100100000, guid: 7b228d1ef7dcbef4fa086182d99cd56a, type: 3}
 --- !u!1 &1092504872
 GameObject:
@@ -971,7 +974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PRESS A TO START
+  m_text: PRESS A BUTTON TO READY UP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 840bf4d89df96674fbc861e8e681c69c, type: 2}
   m_sharedMaterial: {fileID: 7044212302703565455, guid: 840bf4d89df96674fbc861e8e681c69c, type: 2}
@@ -1480,6 +1483,50 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1658711620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658711616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInputManager
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: 2
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: aebdf0a1-317a-40e8-809e-3164fd730374
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 570806988771433513, guid: 4e3dbf1c5755d7d4998366156a9458b9, type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &1680021882
 GameObject:
   m_ObjectHideFlags: 0

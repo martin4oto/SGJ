@@ -13,6 +13,8 @@ public class StartScreenController : MonoBehaviour
     public GameObject p2R;
     bool p1;
     bool p2;
+    bool foundP1Input;
+    bool foundP2Input;
     bool starting;
     private float _timeSinceLoad;
 
@@ -30,20 +32,35 @@ public class StartScreenController : MonoBehaviour
         p2 = true;
         p2R.SetActive(true);
     }
-    void OnEnable()
-    {
-        InputManager.instance.players[0].Subscribe("ButtonA", P1Ready);
-        InputManager.instance.players[1].Subscribe("ButtonA", P2Ready);
-    }
     void OnDisable()
     {
         InputManager.instance.players[0].Unsubscribe("ButtonA", P1Ready);
+        InputManager.instance.players[0].Unsubscribe("ButtonB", P1Ready);
+        InputManager.instance.players[0].Unsubscribe("ButtonC", P1Ready);
         InputManager.instance.players[1].Unsubscribe("ButtonA", P2Ready);
+        InputManager.instance.players[1].Unsubscribe("ButtonB", P2Ready);
+        InputManager.instance.players[1].Unsubscribe("ButtonC", P2Ready);
     }
     private void Update()
     {
         _timeSinceLoad += Time.unscaledDeltaTime;
         
+        if (!foundP1Input && InputManager.instance.players.Count > 0)
+        {
+            Debug.Log("P1 bind");
+            foundP1Input = true;
+            InputManager.instance.players[0].Subscribe("ButtonA", P1Ready);
+            InputManager.instance.players[0].Subscribe("ButtonB", P1Ready);
+            InputManager.instance.players[0].Subscribe("ButtonC", P1Ready);
+            
+        }
+        if (!foundP2Input && InputManager.instance.players.Count > 1){
+            foundP2Input = true;
+            InputManager.instance.players[1].Subscribe("ButtonA", P2Ready);
+            InputManager.instance.players[1].Subscribe("ButtonB", P2Ready);
+            InputManager.instance.players[1].Subscribe("ButtonC", P2Ready);
+        }
+
         if (p1 && p2 && !starting) StartGame();
         // DebugAllButtons(); // uncomment to debug all button presses
     }
